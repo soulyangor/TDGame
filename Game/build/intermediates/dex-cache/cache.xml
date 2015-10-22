@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="E:\androidProject\Game\Astar\libs\android-support-v4.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="bd6479f5dd592790607e0504e66e0f31c2b4d308">
+        <dex dex="E:\androidProject\Game\Astar\build\intermediates\pre-dexed\debug\android-support-v4-1d63b0968f6679ec6324e315ce269040dd82e8ac.jar" />
+    </item>
+
+</items>
