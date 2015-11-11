@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/components/NullIterator.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/window/DrawPanel.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/actions/Action.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/window/DrawablePerson.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/units/Building.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/projecttd/ProjectTD.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/actions/findpathalgorithms/Cell.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/tasks/SetWalkableCells.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/tasks/Task.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/components/Component.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/tasks/MoveTo.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/components/Unit.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/tasks/DefinePath.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/components/GroupIterator.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/actions/DefineViewable.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/actions/Move.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/window/Window.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/components/UnitGroup.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/actions/FindPath.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/window/Grid.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/actions/findpathalgorithms/ConflictsResolver.java</file>
+            <file>file:/C:/Users/Хозяин/Documents/NetBeansProjects/ProjectTD/src/model/actions/findpathalgorithms/FieldMap.java</file>
+        </group>
+    </open-files>
+</project-private>
