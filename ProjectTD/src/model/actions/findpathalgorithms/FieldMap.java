@@ -41,25 +41,25 @@ public class FieldMap {
         int j = toInteger(y);
         FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL;
     }
-
-    public static void setUnwalkablePlace(double x, double y) {
-        int i = toInteger(x);
-        int j = toInteger(y);
-        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL - 10;
-    }
-
+    
     public static void setWalkablePlace(int i, int j) {
         FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL;
-    }
-
-    public static void setUnwalkablePlace(int i, int j) {
-        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL - 10;
     }
 
     public static void setWalkablePlace(Cell cell) {
         int i = cell.getX();
         int j = cell.getY();
         FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL;
+    }
+    
+    public static void setUnwalkablePlace(double x, double y) {
+        int i = toInteger(x);
+        int j = toInteger(y);
+        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL - 10;
+    }
+
+    public static void setUnwalkablePlace(int i, int j) {
+        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL - 10;
     }
 
     public static void setUnwalkablePlace(Cell cell) {
