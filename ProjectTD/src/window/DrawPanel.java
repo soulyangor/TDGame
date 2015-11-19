@@ -65,7 +65,7 @@ public class DrawPanel extends JComponent implements Runnable {
             repaint();
             long dt = System.currentTimeMillis() - t;
             if (dt > 0) {
-              //  System.out.println("Время отрисовки: " + dt + " мс");
+            //   System.out.println("Время отрисовки: " + dt + " мс");
             }
             try {
                 if (dt > delay) {

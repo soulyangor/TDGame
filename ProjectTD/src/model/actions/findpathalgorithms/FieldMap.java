@@ -158,6 +158,14 @@ public class FieldMap {
         } else {
             return -1;
         }
+    }   
+    
+    /**
+     * Функция возвращает массив со значениями проходимости карты.
+     * @return 
+     */
+    public static int[][]  getMap(){
+        return map.clone();
     }
 
     private static void manageLoopByPoints(int i, int j, int x, int y,
