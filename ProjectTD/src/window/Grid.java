@@ -82,7 +82,7 @@ public class Grid {
 
     public void drawGrid(DrawablePerson p) {
         for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 14; j++) {
            /*     if (((p.getIntX() - i) * (p.getIntX() - i)
                         + (p.getIntY() - j) * (p.getIntY() - j))
                         <= FieldMap.toInteger(p.getViewDistance())

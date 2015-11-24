@@ -105,7 +105,7 @@ public class DrawPanel extends JComponent implements Runnable {
                 b.draw();
             }
         }
-        g2d.drawRect(0, 0, 700, 500);
+        g2d.drawRect(0, 0, 700, 700);
         ConflictResolver.print(g2d);
     }
 
