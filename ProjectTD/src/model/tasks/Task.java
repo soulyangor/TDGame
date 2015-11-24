@@ -5,7 +5,7 @@
  */
 package model.tasks;
 
-import model.components.Component;
+import model.components.TDComponent;
 
 /**
  *
@@ -13,7 +13,7 @@ import model.components.Component;
  */
 public interface Task {
     
-    void execute(Component component);
+    void execute(TDComponent component);
     
     boolean isComplete();
     

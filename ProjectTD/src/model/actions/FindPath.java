@@ -27,11 +27,9 @@ public class FindPath implements Action {
 
     @Override
     public void act() {
-        FieldMap.setWalkablePlace(unit.getX(), unit.getY());
         int ex = FieldMap.toInteger(unit.getX());
         int ey = FieldMap.toInteger(unit.getY());
         this.path = FieldMap.searchPath(x, y, ex, ey);
-        FieldMap.setUnwalkablePlace(unit.getX(), unit.getY());
     }
 
     @Override

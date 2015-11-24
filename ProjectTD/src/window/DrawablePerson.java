@@ -81,6 +81,9 @@ public class DrawablePerson extends Person {
         }
         g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
                 currentFrame * 64, fy * 64, (currentFrame + 1) * 64, (fy + 1) * 64, null);
+        g2d.setColor(color);
+        g2d.drawLine((int) x, (int) y,
+                (int) (x + 50 * Math.cos(angle)), (int) (y + 50 * Math.sin(angle)));
         // Временная логика для отладки
         Cell cell = super.getExecutedTask().getCurCell();
         g2d.setColor(color);

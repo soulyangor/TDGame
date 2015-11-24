@@ -7,7 +7,7 @@ package model.actions;
 
 import java.util.LinkedList;
 import java.util.List;
-import model.components.Component;
+import model.components.TDComponent;
 import model.components.UnitGroup;
 import model.components.Unit;
 import model.units.Person;
@@ -42,14 +42,14 @@ public class DefineViewable implements Action {
     @Override
     public void act() {
         this.units = new LinkedList<>();
-        for (Component component : group) {
+        for (TDComponent component : group) {
             if (component == person) {
                 continue;
             }
             if (component instanceof Unit) {
                 Unit u = (Unit) component;
                 if (isViewable(u)) {
-                    this.units.add(u);
+                    units.add(u);
                 }
             }
         }
@@ -66,6 +66,7 @@ public class DefineViewable implements Action {
         }
         double r = Math.sqrt(dx * dx + dy * dy);
         return person.getViewDistance() > r;
+
     }
 
 }

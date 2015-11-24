@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author Хозяин
  */
-public abstract class Unit extends Component {
+public abstract class Unit extends TDComponent {
 
     private double x;
     private double y;

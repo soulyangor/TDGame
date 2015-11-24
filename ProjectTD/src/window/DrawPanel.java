@@ -11,12 +11,12 @@ import java.awt.Graphics2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
-import model.actions.DefineViewable;
-import model.actions.findpathalgorithms.ConflictsResolver;
+import model.actions.findpathalgorithms.ConflictResolver;
 import model.actions.findpathalgorithms.FieldMap;
+import model.components.TDComponent;
 import model.components.UnitGroup;
 import model.tasks.DefinePath;
-import model.tasks.SetWalkableCells;
+import model.tasks.FMove;
 
 /**
  *
@@ -28,7 +28,6 @@ public class DrawPanel extends JComponent implements Runnable {
     Grid grid;
     DrawablePerson p1, p2;
     UnitGroup group = new UnitGroup();
-    DefineViewable action = new DefineViewable();
 
     public DrawPanel() {
         super();
@@ -37,23 +36,34 @@ public class DrawPanel extends JComponent implements Runnable {
         FieldMap.setCellSize(50);
         p1 = new DrawablePerson(200, 100);
         p2 = new DrawablePerson(100, 200);
-        p1.addTask(new DefinePath(50, 50));
-        p2.addTask(new DefinePath(350, 350));
-        p1.addTask(new DefinePath(350, 50));
-        p2.addTask(new DefinePath(350, 50));
-        p1.addTask(new DefinePath(350, 350));
-        p2.addTask(new DefinePath(50, 50));
-        p1.addTask(new DefinePath(50, 350));
-        p2.addTask(new DefinePath(50, 350));
+        p1.addTask(new DefinePath(50, 50, group));
+        p2.addTask(new DefinePath(350, 350, group));
+        p1.addTask(new DefinePath(350, 50, group));
+        p2.addTask(new DefinePath(350, 50, group));
+        p1.addTask(new DefinePath(350, 350, group));
+        p2.addTask(new DefinePath(50, 50, group));
+        p1.addTask(new DefinePath(50, 350, group));
+        p2.addTask(new DefinePath(50, 350, group));
 
+        /* p1.addTask(new FMove(50, 50, group));
+         p1.addTask(new FMove(350, 50, group));
+         p1.addTask(new FMove(350, 350, group));
+         p1.addTask(new FMove(50, 350, group));*/
         //Временные операции
         p1.color = Color.BLUE;
         p2.color = Color.RED;
         p2.d = 2;
-        
+
+        for (int i = 0; i < 14; i++) {
+            for (int j = 0; j < 14; j++) {
+                if (grid.getGrid()[i][j] > 0) {
+                    group.add(new Box(FieldMap.toDouble(i), FieldMap.toDouble(j)));
+                }
+            }
+        }
+
         group.add(p1);
         group.add(p2);
-        group.setTask(new SetWalkableCells());
         new Thread(this).start();
     }
 
@@ -65,7 +75,7 @@ public class DrawPanel extends JComponent implements Runnable {
             repaint();
             long dt = System.currentTimeMillis() - t;
             if (dt > 0) {
-            //   System.out.println("Время отрисовки: " + dt + " мс");
+                System.out.println("Время отрисовки: " + dt + " мс");
             }
             try {
                 if (dt > delay) {
@@ -86,16 +96,17 @@ public class DrawPanel extends JComponent implements Runnable {
         p1.setGraphics(g2d);
         grid.drawGrid(p1);
         p1.draw();
-        action.setUnit(p1);
-        action.setGroup(group);
-        action.act();
-    //    for (Unit unit : action.getUnits()) {
-    //        if (unit == p2) {
-                p2.setGraphics(g2d);
-                p2.draw();
-      //      }
-       // }
+        p2.setGraphics(g2d);
+        p2.draw();
+        for (TDComponent c : group) {
+            if (c instanceof Box) {
+                Box b = (Box) c;
+                b.setGraphics(g2d);
+                b.draw();
+            }
+        }
         g2d.drawRect(0, 0, 700, 500);
+        ConflictResolver.print(g2d);
     }
 
 }

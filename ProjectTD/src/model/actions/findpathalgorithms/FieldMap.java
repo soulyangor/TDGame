@@ -1,6 +1,8 @@
 package model.actions.findpathalgorithms;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Map;
 
@@ -45,27 +47,27 @@ public class FieldMap {
     public static void setUnwalkablePlace(double x, double y) {
         int i = toInteger(x);
         int j = toInteger(y);
-        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL - 10;
+        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL + 10;
+    }
+
+    public static void setUnwalkablePlace(int i, int j) {
+        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL + 10;
+    }
+
+    public static void setUnwalkablePlace(Cell cell) {
+        int i = cell.getX();
+        int j = cell.getY();
+        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL + 10;
     }
 
     public static void setWalkablePlace(int i, int j) {
         FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL;
     }
 
-    public static void setUnwalkablePlace(int i, int j) {
-        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL - 10;
-    }
-
     public static void setWalkablePlace(Cell cell) {
         int i = cell.getX();
         int j = cell.getY();
         FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL;
-    }
-
-    public static void setUnwalkablePlace(Cell cell) {
-        int i = cell.getX();
-        int j = cell.getY();
-        FieldMap.map[i][j] = FieldMap.VALUE_WALKABLE_CELL - 10;
     }
 
     public static int getCellSize() {
@@ -106,23 +108,23 @@ public class FieldMap {
             String key = curCell.createKey();
             closePoints.put(key, curCell);
             openPoints.remove(key);
-            MinMax minMax = new MinMax(curCell);
-            for (int i = minMax.getMinI(); i < minMax.getMaxI(); i++) {
-                for (int j = minMax.getMinJ(); j < minMax.getMaxJ(); j++) {
-                    int manageValue = FieldMap.manageLoopByMap(i, j, curCell,
-                            complete);
-                    if (manageValue == 1) {
-                        continue;
-                    }
-                    if (manageValue == -1) {
-                        break;
-                    }
-                    complete = (i == x) && (j == y);
-                    FieldMap.manageLoopByPoints(i, j, x, y, curCell,
-                            openPoints, closePoints);
+            for (Cell iter : getBorder(curCell)) {
+                int i = iter.getX();
+                int j = iter.getY();
+                int manageValue = FieldMap.manageLoopByMap(i, j, curCell,
+                        complete);
+                if (manageValue == 1) {
+                    continue;
                 }
+                if (manageValue == -1) {
+                    break;
+                }
+                complete = (i == x) && (j == y);
+                FieldMap.manageLoopByPoints(i, j, x, y, curCell,
+                        openPoints, closePoints);
             }
         }
+
         String key = Integer.toString(x) + "|" + Integer.toString(y);
         curCell = openPoints.get(key);
         return curCell;
@@ -158,14 +160,6 @@ public class FieldMap {
         } else {
             return -1;
         }
-    }   
-    
-    /**
-     * Функция возвращает массив со значениями проходимости карты.
-     * @return 
-     */
-    public static int[][]  getMap(){
-        return map.clone();
     }
 
     private static void manageLoopByPoints(int i, int j, int x, int y,
@@ -196,38 +190,29 @@ public class FieldMap {
         }
     }
 
-    private static class MinMax {
+    private static List<Cell> getBorder(Cell cell) {
+        int minI = (cell.getX() - 1) < 0 ? 0 : cell.getX() - 1;
+        int minJ = (cell.getY() - 1) < 0 ? 0 : cell.getY() - 1;
+        int maxI = (cell.getX() + 2) > FieldMap.mapSize ? FieldMap.mapSize
+                : cell.getX() + 2;
+        int maxJ = (cell.getY() + 2) > FieldMap.mapSize ? FieldMap.mapSize
+                : cell.getY() + 2;
+        List<Cell> cells = new ArrayList<>();
+        for (int i = minI; i < maxI; i++) {
+            cells.add(new Cell(i, minJ));
 
-        private final int minI;
-        private final int minJ;
-        private final int maxI;
-        private final int maxJ;
-
-        public int getMinI() {
-            return minI;
         }
-
-        public int getMinJ() {
-            return minJ;
+        for (int j = minJ; j < maxJ; j++) {
+            cells.add(new Cell(maxI - 1, j));
         }
+        for (int i = maxI - 1; i >= minI; i--) {
+            cells.add(new Cell(i, maxJ - 1));
 
-        public int getMaxI() {
-            return maxI;
         }
-
-        public int getMaxJ() {
-            return maxJ;
+        for (int j = maxJ - 1; j >= minJ; j--) {
+            cells.add(new Cell(minI, j));
         }
-
-        public MinMax(Cell cell) {
-            this.minI = (cell.getX() - 1) < 0 ? 0 : cell.getX() - 1;
-            this.minJ = (cell.getY() - 1) < 0 ? 0 : cell.getY() - 1;
-            this.maxI = (cell.getX() + 2) > FieldMap.mapSize ? FieldMap.mapSize
-                    : cell.getX() + 2;
-            this.maxJ = (cell.getY() + 2) > FieldMap.mapSize ? FieldMap.mapSize
-                    : cell.getY() + 2;
-        }
-
+        return cells;
     }
 
 }

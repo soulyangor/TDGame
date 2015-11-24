@@ -39,7 +39,7 @@ public class GroupIterator implements Iterator {
     public Object next() {
         if (hasNext()) {
             Iterator iterator = (Iterator) stack.peek();
-            Component component = (Component) iterator.next();
+            TDComponent component = (TDComponent) iterator.next();
             if (component instanceof UnitGroup) {
                 stack.push(component.createIterator());
             }

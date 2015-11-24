@@ -14,7 +14,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import model.actions.findpathalgorithms.FieldMap;
 
 /**
  *
@@ -44,6 +43,8 @@ public class Grid {
         grid[1][7] = 0;
         grid[7][1] = 0;
         grid[7][7] = 0;
+        grid[4][2] = 0;
+        grid[2][4] = 0;
         BufferedImage original = null;
         InputStream input = Window.class.getResourceAsStream("/resources/tile.png");
         try {
@@ -95,10 +96,10 @@ public class Grid {
                      g2d.drawImage(imgTw, i * 50, j * 50, 50, 50, null);
                      }
                      }*/
-                    if (grid[i][j] > 0) {
+                   /* if (grid[i][j] > 0) {
                         g2d.drawImage(imgBox, i * 50, j * 50, 50, 50, null);
                     }
-              /*  } else {
+*/              /*  } else {
                     g2d.fillRect(i * 50, j * 50, i * 50 + 50, j * 50 + 50);*/
                 }
             }

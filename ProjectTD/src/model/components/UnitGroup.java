@@ -13,10 +13,9 @@ import java.util.List;
  *
  * @author Хозяин
  */
-public class UnitGroup extends Component {
+public class UnitGroup extends TDComponent {
 
-    private final Iterator iterator = null;
-    private final List<Component> components;
+    private final List<TDComponent> components;
 
     public UnitGroup() {
         super();
@@ -24,29 +23,29 @@ public class UnitGroup extends Component {
     }
 
     @Override
-    public void add(Component component) {
+    public void add(TDComponent component) {
         components.add(component);
     }
 
     @Override
-    public void remove(Component component) {
+    public void remove(TDComponent component) {
         components.remove(component);
     }
 
     @Override
-    public Component getChild(int i) {
+    public TDComponent getChild(int i) {
         return components.get(i);
     }
 
     @Override
     public void executeTask() {
         super.executeTask();
-        for (Component component : components) {
+        for (TDComponent component : components) {
             component.executeTask();
         }
     }
 
-    public List<Component> getComponents() {
+    public List<TDComponent> getComponents() {
         return components;
     }
 
