@@ -71,7 +71,7 @@ public class Logic {
         Logic.map[i][j] = null;
     }
 
-    public static void setUnwalkablePlace(Unit unit) {
+    public static void setUnit(Unit unit) {
         int i = toInteger(unit.getX());
         int j = toInteger(unit.getY());
         Logic.map[i][j] = unit;

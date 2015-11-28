@@ -72,7 +72,7 @@ public class DrawPanel extends JComponent implements Runnable {
             for (int j = 0; j < 14; j++) {
                 if (grid.getGrid()[i][j] > 0) {
                     Box b = new Box(Logic.toDouble(i), Logic.toDouble(j));
-                    Logic.setUnwalkablePlace(b);
+                    Logic.setUnit(b);
                     group.add(b);
                 }
             }

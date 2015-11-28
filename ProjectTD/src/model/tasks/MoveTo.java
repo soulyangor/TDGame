@@ -120,7 +120,7 @@ public class MoveTo implements Task {
             unit.setX(ux + speed * Math.cos(angle));
             unit.setY(uy + speed * Math.sin(angle));
         }
-        Logic.setUnwalkablePlace(unit);
+        Logic.setUnit(unit);
     }
 
 }
