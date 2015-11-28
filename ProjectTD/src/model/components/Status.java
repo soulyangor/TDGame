@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.actions;
-
-import model.components.Unit;
+package model.components;
 
 /**
  *
- * @author Хозяин
+ * @author Sokolov@ivc.org
  */
-public interface Action {
-    
-    void act();
-    
-    void setUnit(Unit unit);
-    
+public enum Status {
+    STAND, WAIT, MOVE, ATTACK, DAMAGED
 }

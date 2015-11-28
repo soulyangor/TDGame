@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import model.actions.findpathalgorithms.Cell;
+import model.components.Status;
 import model.units.Person;
 
 /**
@@ -79,8 +80,13 @@ public class DrawablePerson extends Person {
         if (((angle - Math.PI / 4) < 0) || ((angle - 7 * Math.PI / 4) > 0)) {
             fy = 3;
         }
-        g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
-                currentFrame * 64, fy * 64, (currentFrame + 1) * 64, (fy + 1) * 64, null);
+        if (super.getStatus() == Status.STAND) {
+            g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
+                    0, fy * 64, 64, (fy + 1) * 64, null);
+        } else {
+            g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
+                    currentFrame * 64, fy * 64, (currentFrame + 1) * 64, (fy + 1) * 64, null);
+        }
         g2d.setColor(color);
         g2d.drawLine((int) x, (int) y,
                 (int) (x + 50 * Math.cos(angle)), (int) (y + 50 * Math.sin(angle)));
@@ -105,6 +111,11 @@ public class DrawablePerson extends Person {
         } else {
             currentFrame++;
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.color == Color.RED ? "Красный" : "Синий";
     }
 
 }

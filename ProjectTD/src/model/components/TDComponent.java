@@ -8,7 +8,7 @@ package model.components;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-import model.tasks.DefinePath;
+import model.tasks.MoveTo;
 import model.tasks.Task;
 
 /**
@@ -73,8 +73,8 @@ public abstract class TDComponent implements Iterable<TDComponent> {
     }
 
     // Временный метод для отладки
-    public DefinePath getExecutedTask() {
-        return (DefinePath)executedTask;
+    public MoveTo getExecutedTask() {
+        return (MoveTo)executedTask;
     }
 
 }

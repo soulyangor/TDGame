@@ -17,16 +17,26 @@ public abstract class Unit extends TDComponent {
     private double y;
     private double angle;
     private double speed;
+    private Status status;
     
     public Unit(double x, double y) {
         super();
         this.x = x;
         this.y = y;
+        this.status = Status.STAND;
     }
     
     @Override
     public Iterator createIterator(){
         return new NullIterator();
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public double getX() {

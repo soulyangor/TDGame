@@ -45,6 +45,8 @@ public class Grid {
         grid[7][7] = 0;
         grid[4][2] = 0;
         grid[2][4] = 0;
+        grid[4][4] = 0;
+        grid[2][2] = 0;
         BufferedImage original = null;
         InputStream input = Window.class.getResourceAsStream("/resources/tile.png");
         try {
@@ -82,7 +84,7 @@ public class Grid {
 
     public void drawGrid(DrawablePerson p) {
         for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 14; j++) {
+            for (int j = 0; j < 10; j++) {
            /*     if (((p.getIntX() - i) * (p.getIntX() - i)
                         + (p.getIntY() - j) * (p.getIntY() - j))
                         <= FieldMap.toInteger(p.getViewDistance())
