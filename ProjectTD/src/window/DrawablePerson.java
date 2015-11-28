@@ -37,10 +37,10 @@ public class DrawablePerson extends Person {
     public Color color;
     public int d;
 
-    public DrawablePerson(double x, double y) {
+    public DrawablePerson(double x, double y, String res) {
         super(x, y, 3, 150, 10);
         BufferedImage original = null;
-        InputStream input = Window.class.getResourceAsStream("/resources/дядька.png");
+        InputStream input = Window.class.getResourceAsStream(res);
         try {
             original = ImageIO.read(input);
         } catch (IOException ex) {

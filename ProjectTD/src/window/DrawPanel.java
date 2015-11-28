@@ -32,10 +32,10 @@ public class DrawPanel extends JComponent implements Runnable {
         grid = new Grid();
         Logic.generate(14);
         Logic.setCellSize(50);
-        p1 = new DrawablePerson(200, 100);
-        p2 = new DrawablePerson(100, 200);
-        p3 = new DrawablePerson(200, 200);
-        p4 = new DrawablePerson(100, 100);
+        p1 = new DrawablePerson(200, 100, "/resources/дядька.png");
+        p2 = new DrawablePerson(100, 200, "/resources/злой_дядька.png");
+        p3 = new DrawablePerson(200, 200, "/resources/щитоДядька.png");
+        p4 = new DrawablePerson(100, 100, "/resources/лыцарь.png");
         
         p1.addTask(new MoveTo(50, 50));
         p2.addTask(new MoveTo(350, 350));

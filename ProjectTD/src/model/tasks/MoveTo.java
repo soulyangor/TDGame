@@ -34,8 +34,10 @@ public class MoveTo implements Task {
         if (component instanceof Unit) {
             Unit unit = (Unit) component;
             if (curCell == null) {
+                unit.setStatus(Status.MOVE);
                 definePath(unit);
                 if (curCell == null) {
+                    unit.setStatus(Status.STAND);
                     return;
                 }
             }
