@@ -40,9 +40,17 @@ public class UnitGroup extends TDComponent {
     @Override
     public void executeTask() {
         super.executeTask();
+        System.out.println("Начало диалога");
         for (TDComponent component : components) {
+            if (component instanceof Unit) {
+                Unit u = (Unit) component;
+                if (u.getStatus() != Status.STAND) {
+                    System.out.println("Исполнение задачи: " + u);
+                }
+            }
             component.executeTask();
         }
+        System.out.println("Конец диалога");
     }
 
     public List<TDComponent> getComponents() {

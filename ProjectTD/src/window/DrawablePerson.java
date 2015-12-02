@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import model.actions.findpathalgorithms.Cell;
+import model.logics.Cell;
 import model.components.Status;
 import model.units.Person;
 
@@ -80,7 +80,8 @@ public class DrawablePerson extends Person {
         if (((angle - Math.PI / 4) < 0) || ((angle - 7 * Math.PI / 4) > 0)) {
             fy = 3;
         }
-        if (super.getStatus() == Status.STAND) {
+        if ((super.getStatus() == Status.STAND)
+                || (super.getStatus() == Status.WAIT)) {
             g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
                     0, fy * 64, 64, (fy + 1) * 64, null);
         } else {
@@ -115,7 +116,11 @@ public class DrawablePerson extends Person {
 
     @Override
     public String toString() {
-        return this.color == Color.RED ? "Красный" : "Синий";
+        if(this.color == Color.RED){return "Красный";}
+        if(this.color == Color.BLUE){return "Синий";}
+        if(this.color == Color.CYAN){return "Бирюзовый";}
+        if(this.color == Color.BLACK){return "Чёрный";}
+        return "другой цвет";
     }
 
 }

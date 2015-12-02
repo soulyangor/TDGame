@@ -38,9 +38,17 @@ public class Window {
         }
         Image image = original.getScaledInstance(48, 48, 1);
         frame.setIconImage(image);
-        frame.setSize(720, 600);
+        frame.setSize(720, 720);
         JButton btnIncrease = new JButton("Increase delay");
         JButton btnDecrease = new JButton("Decrease delay");
+        JButton btnStop = new JButton("Stop");
+        JButton btnStart = new JButton("Start");
+        btnStop.setSize(200, 30);
+        btnStart.setSize(200, 30);
+        btnStop.setLocation(0, 570);
+        btnStart.setLocation(220, 570);
+        btnStop.setVisible(true);
+        btnStart.setVisible(true);
         JLabel txt = new JLabel();
         btnDecrease.setSize(200, 30);
         btnIncrease.setSize(200, 30);
@@ -52,10 +60,12 @@ public class Window {
         btnDecrease.setVisible(true);
         txt.setVisible(true);
         DrawPanel panel = new DrawPanel();
-        panel.setSize(700, 500);
+        panel.setSize(700, 700);
         frame.add(panel);
         panel.add(btnDecrease);
         panel.add(btnIncrease);
+        panel.add(btnStart);
+        panel.add(btnStop);
         txt.setText("Delay is " + panel.delay + " ms");
         panel.add(txt);
         btnIncrease.addActionListener(new ActionListener() {
@@ -75,6 +85,22 @@ public class Window {
                 }
                 panel.delay -= 10;
                 txt.setText("Delay is " + panel.delay + " ms");
+            }
+        });
+        btnStart.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.isRun = true;
+                System.out.println("Старт");
+            }
+        });
+        btnStop.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.isRun = false;
+                System.out.println("Стоп");
             }
         });
         frame.setVisible(true);

@@ -5,6 +5,8 @@
  */
 package window;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -25,7 +27,6 @@ public class Grid {
     private Image image;
     private Image imgTw;
     private Image imgShadow;
-    private Image imgBox;
     private Graphics2D g2d;
 
     public Grid() {
@@ -34,19 +35,14 @@ public class Grid {
         for (int i = 0; i < 14; i++) {
             for (int j = 0; j < 14; j++) {
                 grid[i][j] = 0;
-                if (rand.nextInt(20) > 16) {
+                if ((j == 5) || (j == 6) || (j == 4) || (j == 3)) {
                     grid[i][j] = 10;
+                }
+                if (i == 9) {
+                    grid[i][j] = 0;
                 }
             }
         }
-        grid[1][1] = 0;
-        grid[1][7] = 0;
-        grid[7][1] = 0;
-        grid[7][7] = 0;
-        grid[4][2] = 0;
-        grid[2][4] = 0;
-        grid[4][4] = 0;
-        grid[2][2] = 0;
         BufferedImage original = null;
         InputStream input = Window.class.getResourceAsStream("/resources/tile.png");
         try {
@@ -69,13 +65,6 @@ public class Grid {
          Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
          }
          imgShadow = original.getScaledInstance(64, 64, 1);*/
-        input = Window.class.getResourceAsStream("/resources/box.png");
-        try {
-            original = ImageIO.read(input);
-        } catch (IOException ex) {
-            Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        imgBox = original.getScaledInstance(64, 64, 1);
     }
 
     public void setGraphics(Graphics2D g2d) {
@@ -85,25 +74,10 @@ public class Grid {
     public void drawGrid(DrawablePerson p) {
         for (int i = 0; i < 14; i++) {
             for (int j = 0; j < 10; j++) {
-           /*     if (((p.getIntX() - i) * (p.getIntX() - i)
-                        + (p.getIntY() - j) * (p.getIntY() - j))
-                        <= FieldMap.toInteger(p.getViewDistance())
-                        * FieldMap.toInteger(p.getViewDistance()) + 1)*/ {
-                    g2d.drawImage(image, i * 50, j * 50, 50, 50, null);
-                    /*} else {
-                     if (((p.getIntX() - i) * (p.getIntX() - i)
-                     + (p.getIntY() - j) * (p.getIntY() - j)) < 13) {
-                     g2d.drawImage(imgShadow, i * 50, j * 50, 50, 50, null);
-                     } else {
-                     g2d.drawImage(imgTw, i * 50, j * 50, 50, 50, null);
-                     }
-                     }*/
-                   /* if (grid[i][j] > 0) {
-                        g2d.drawImage(imgBox, i * 50, j * 50, 50, 50, null);
-                    }
-*/              /*  } else {
-                    g2d.fillRect(i * 50, j * 50, i * 50 + 50, j * 50 + 50);*/
-                }
+                g2d.drawImage(image, i * 50, j * 50, 50, 50, null);
+                g2d.setColor(Color.BLACK);
+                g2d.setFont(new Font(Font.DIALOG, Font.ITALIC, 10));
+                g2d.drawString("(" + i + "," + j + ")", i * 50, j * 50 + 10);
             }
         }
     }

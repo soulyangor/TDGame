@@ -1,4 +1,4 @@
-package model.actions.findpathalgorithms;
+package model.logics;
 
 import java.util.LinkedHashMap;
 
@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
  */
 public class Cell {
     /*---------------------------------Private fields------------------------------------*/
+
     private final int x;
     private final int y;
     private Cell parent;
@@ -25,31 +26,48 @@ public class Cell {
     }
 
     /*--------------------------------Getters and setters---------------------------------*/
-    public int getX() { return x; }
+    public int getX() {
+        return x;
+    }
 
-    public int getY() { return y; }
+    public int getY() {
+        return y;
+    }
 
-    public Cell getParent() { return parent; }
-    public void setParent(Cell parent) { this.parent = parent; }
+    public Cell getParent() {
+        return parent;
+    }
 
-    public double getG() { return g; }
-    public void setG(double g) { this.g = g; }
+    public void setParent(Cell parent) {
+        this.parent = parent;
+    }
 
-    public double getF() { return f; }
+    public double getG() {
+        return g;
+    }
+
+    public void setG(double g) {
+        this.g = g;
+    }
+
+    public double getF() {
+        return f;
+    }
 
     /*---------------------------------------Methods----------------------------------------*/
+    public void calcF() {
+        this.f = this.h + this.g;
+    }
 
-    public void calcF(){ this.f = this.h + this.g; }
-
-    public void calcH(int x, int y){
+    public void calcH(int x, int y) {
         this.h = Math.sqrt((x - this.x) * (x - this.x) + (y - this.y) * (y - this.y));
     }
 
-    public final String createKey(){
+    public final String createKey() {
         return Integer.toString(this.x) + "|" + Integer.toString(this.y);
     }
 
-    public LinkedHashMap<String, Cell> formPath(){
+    public LinkedHashMap<String, Cell> formPath() {
         LinkedHashMap<String, Cell> path = new LinkedHashMap<>();
         Cell current = this;
         while (current.getParent() != null) {
@@ -57,6 +75,10 @@ public class Cell {
             current = current.getParent();
         }
         return path;
+    }
+
+    public boolean equals(Cell cell) {
+        return (this.x == cell.getX()) && (this.y == cell.getY());
     }
 
 }

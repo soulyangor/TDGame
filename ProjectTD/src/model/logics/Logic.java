@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.actions.findpathalgorithms;
+package model.logics;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import model.components.Status;
 import model.components.Unit;
-import model.units.Building;
 
 /**
  *
@@ -32,17 +31,21 @@ public class Logic {
     }
 
     /*--------------------------------------Static methods-----------------------------------*/
-    public static double toDouble(int arg) {
+    public static double toRealCoordinate(int arg) {
         return Logic.cellSize * (arg + 0.5);
     }
 
-    public static int toInteger(double arg) {
+    public static int toCellCoordinate(double arg) {
         return (int) (arg / Logic.cellSize);
     }
 
     public static void setMap(Unit[][] map, int mapSize) {
         Logic.map = map;
         Logic.mapSize = mapSize;
+    }
+
+    public static int getMapSize() {
+        return mapSize;
     }
 
     public static void generate(int mapSize) {
@@ -56,8 +59,8 @@ public class Logic {
     }
 
     public static void setWalkablePlace(double x, double y) {
-        int i = toInteger(x);
-        int j = toInteger(y);
+        int i = toCellCoordinate(x);
+        int j = toCellCoordinate(y);
         Logic.map[i][j] = null;
     }
 
@@ -72,8 +75,8 @@ public class Logic {
     }
 
     public static void setUnit(Unit unit) {
-        int i = toInteger(unit.getX());
-        int j = toInteger(unit.getY());
+        int i = toCellCoordinate(unit.getX());
+        int j = toCellCoordinate(unit.getY());
         Logic.map[i][j] = unit;
     }
 
@@ -84,8 +87,8 @@ public class Logic {
     }
 
     public static Unit getUnit(double x, double y) {
-        int i = toInteger(x);
-        int j = toInteger(y);
+        int i = toCellCoordinate(x);
+        int j = toCellCoordinate(y);
         return Logic.map[i][j];
     }
 
@@ -102,8 +105,8 @@ public class Logic {
     }
 
     public static boolean isWalkable(double x, double y) {
-        int i = toInteger(x);
-        int j = toInteger(y);
+        int i = toCellCoordinate(x);
+        int j = toCellCoordinate(y);
         return (!((Logic.map[i][j] != null)
                 && (Logic.map[i][j].getStatus() == Status.STAND)));
     }

@@ -5,14 +5,20 @@
  */
 package window;
 
+import com.oracle.jrockit.jfr.ValueDefinition;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
-import model.actions.findpathalgorithms.Logic;
+import model.logics.Logic;
+import model.components.SortedByY;
 import model.components.TDComponent;
+import model.components.Unit;
 import model.components.UnitGroup;
 import model.tasks.MoveTo;
 
@@ -22,6 +28,7 @@ import model.tasks.MoveTo;
  */
 public class DrawPanel extends JComponent implements Runnable {
 
+    volatile boolean isRun = true;
     long delay = 60;
     Grid grid;
     DrawablePerson p1, p2, p3, p4;
@@ -32,11 +39,11 @@ public class DrawPanel extends JComponent implements Runnable {
         grid = new Grid();
         Logic.generate(14);
         Logic.setCellSize(50);
-        p1 = new DrawablePerson(200, 100, "/resources/дядька.png");
-        p2 = new DrawablePerson(100, 200, "/resources/злой_дядька.png");
-        p3 = new DrawablePerson(200, 200, "/resources/щитоДядька.png");
-        p4 = new DrawablePerson(100, 100, "/resources/лыцарь.png");
-        
+        p1 = new DrawablePerson(100, 450, "/resources/дядька.png");
+        p2 = new DrawablePerson(50, 100, "/resources/злой_дядька.png");
+        p3 = new DrawablePerson(100, 100, "/resources/щитоДядька.png");
+        p4 = new DrawablePerson(50, 450, "/resources/лыцарь.png");
+
         p1.addTask(new MoveTo(50, 50));
         p2.addTask(new MoveTo(350, 350));
         p1.addTask(new MoveTo(350, 50));
@@ -45,7 +52,7 @@ public class DrawPanel extends JComponent implements Runnable {
         p2.addTask(new MoveTo(50, 50));
         p1.addTask(new MoveTo(50, 350));
         p2.addTask(new MoveTo(50, 350));
-        
+
         p3.addTask(new MoveTo(50, 50));
         p4.addTask(new MoveTo(350, 350));
         p3.addTask(new MoveTo(350, 50));
@@ -71,7 +78,7 @@ public class DrawPanel extends JComponent implements Runnable {
         for (int i = 0; i < 14; i++) {
             for (int j = 0; j < 14; j++) {
                 if (grid.getGrid()[i][j] > 0) {
-                    Box b = new Box(Logic.toDouble(i), Logic.toDouble(j));
+                    Box b = new Box(Logic.toRealCoordinate(i), Logic.toRealCoordinate(j));
                     Logic.setUnit(b);
                     group.add(b);
                 }
@@ -88,20 +95,23 @@ public class DrawPanel extends JComponent implements Runnable {
     @Override
     public void run() {
         while (true) {
-            long t = System.currentTimeMillis();
-            group.executeTask();
-            repaint();
-            long dt = System.currentTimeMillis() - t;
-            if (dt > 0) {
-                System.out.println("Время отрисовки: " + dt + " мс");
-            }
-            try {
-                if (dt > delay) {
-                    continue;
+           // System.out.println(isRun);
+            if (isRun) {
+                long t = System.currentTimeMillis();
+                group.executeTask();
+                repaint();
+                long dt = System.currentTimeMillis() - t;
+                if (dt > 0) {
+                    //System.out.println("Время отрисовки: " + dt + " мс");
                 }
-                Thread.sleep(delay - dt);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    if (dt > delay) {
+                        continue;
+                    }
+                    Thread.sleep(delay - dt);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -111,20 +121,28 @@ public class DrawPanel extends JComponent implements Runnable {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         grid.setGraphics(g2d);
-        p1.setGraphics(g2d);
         grid.drawGrid(p1);
-        p1.draw();
-        p2.setGraphics(g2d);
-        p2.draw();
-        p3.setGraphics(g2d);
-        p3.draw();
-        p4.setGraphics(g2d);
-        p4.draw();
+
+        List<Unit> units = new ArrayList<>();
+
         for (TDComponent c : group) {
-            if (c instanceof Box) {
-                Box b = (Box) c;
+            if (c instanceof Unit) {
+                units.add((Unit) c);
+            }
+        }
+
+        Collections.sort(units, new SortedByY());
+
+        for (Unit u : units) {
+            if (u instanceof Box) {
+                Box b = (Box) u;
                 b.setGraphics(g2d);
                 b.draw();
+            }
+            if (u instanceof DrawablePerson) {
+                DrawablePerson dp = (DrawablePerson) u;
+                dp.setGraphics(g2d);
+                dp.draw();
             }
         }
         g2d.drawRect(0, 0, 700, 500);

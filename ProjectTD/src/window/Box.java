@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import model.actions.findpathalgorithms.Logic;
+import model.logics.Logic;
 import model.units.Building;
 
 /**
@@ -42,8 +42,8 @@ public class Box extends Building {
     }
 
     public void draw() {
-        int i = Logic.toInteger(super.getX());
-        int j = Logic.toInteger(super.getY());
+        int i = Logic.toCellCoordinate(super.getX());
+        int j = Logic.toCellCoordinate(super.getY());
         g2d.drawImage(image, i * 50, j * 50, 50, 50, null);
     }
 
