@@ -50,9 +50,25 @@ public class MoveTo implements Task {
 
             if ((unit.getStatus() == Status.WAIT) && (u != null)
                     && (u.getStatus() == Status.WAIT)) {
-                System.out.println(unit.toString() + ": не могу пройти, пытаюсь обойти");
+                System.out.println(unit.toString() + ": не могу пройти, мешает "
+                        + u + ", пытаюсь обойти");
                 BackCells.setStandUnit(unit);
-                curCell = definePath(unit);
+                if (curCell.getParent() != null) {
+                    curCell = definePath(unit);
+                } else {
+                    curCell = null;
+                }
+
+                /*    if (curCell != null) {
+                 double r = Math.sqrt(Math.pow(
+                 Logic.toRealCoordinate(curCell.getX()) - unit.getX(), 2.0)
+                 + Math.pow(Logic.toRealCoordinate(curCell.getY()) - unit.getY(), 2.0));
+                 if (r < unit.getSpeed()) {
+                 curCell = curCell.getParent();
+                 System.out.println(unit.toString() + ": стою в точке обхода, буду двигаться в ("
+                 + curCell.getX() + "," + curCell.getY() + ")");
+                 }
+                 }*/
                 BackCells.setWaitUnit();
                 if (curCell == null) {
                     System.out.println(unit + ": не могу обойти, прошу "
@@ -72,7 +88,6 @@ public class MoveTo implements Task {
                             System.out.println(unit + ": сам не могу отойти");
                         }
                     }
-
                     return;
                 }
             }
@@ -86,6 +101,13 @@ public class MoveTo implements Task {
             }
             if (r > 1.5 * Logic.getCellSize()) {
                 curCell = null;
+            }
+            if ((r > 1) && (curCell != null) && ((!Logic.isWalkable(
+                    Logic.toCellCoordinate(unit.getX()), curCell.getY()))
+                    || (!Logic.isWalkable(curCell.getX(),
+                            Logic.toCellCoordinate(unit.getY()))))) {
+                curCell = null;
+                System.out.println("вызван для " + unit);
             }
 
             complete = curCell == null;
@@ -182,6 +204,11 @@ public class MoveTo implements Task {
             unit.setY(uy + speed * Math.sin(angle));
         }
         Logic.setUnit(unit);
+    }
+
+    @Override
+    public String toString() {
+        return "Задача - идти в точку (" + x + "," + y + ")";
     }
 
 }

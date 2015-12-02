@@ -42,11 +42,13 @@ public abstract class TDComponent implements Iterable<TDComponent> {
     public void executeTask() {
         if ((speedTask != null) && (!speedTask.isComplete())) {
             speedTask.execute(this);
+            System.out.println(speedTask);
             return;
         }
         if ((executedTask == null) || (tasks.isEmpty())) {
             return;
         }
+        System.out.println(executedTask);
         executedTask.execute(this);
         if (executedTask.isComplete()) {
             executedTask.notComplete();

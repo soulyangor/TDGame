@@ -5,7 +5,9 @@
  */
 package window;
 
+import com.oracle.jrockit.jfr.ValueDefinition;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -29,12 +31,14 @@ public class DrawPanel extends JComponent implements Runnable {
 
     volatile boolean isRun = true;
     long delay = 60;
+    static long iter;
     Grid grid;
     DrawablePerson p1, p2, p3, p4;
     UnitGroup group = new UnitGroup();
 
     public DrawPanel() {
         super();
+        iter = 0;
         grid = new Grid();
         Logic.generate(14);
         Logic.setCellSize(50);
@@ -94,8 +98,9 @@ public class DrawPanel extends JComponent implements Runnable {
     @Override
     public void run() {
         while (true) {
-           // System.out.println(isRun);
+            // System.out.println(isRun);
             if (isRun) {
+                iter++;
                 long t = System.currentTimeMillis();
                 group.executeTask();
                 repaint();
@@ -121,6 +126,10 @@ public class DrawPanel extends JComponent implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         grid.setGraphics(g2d);
         grid.drawGrid(p1);
+
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(new Font(Font.DIALOG, Font.ITALIC, 20));
+        g2d.drawString("Итерация:" + iter, 10, 650);
 
         List<Unit> units = new ArrayList<>();
 

@@ -4,11 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/ProjectTD/src/model/tasks/BackCells.java</file>
+            <file>file:/D:/ProjectTD/src/model/components/GroupIterator.java</file>
             <file>file:/D:/ProjectTD/src/window/DrawablePerson.java</file>
             <file>file:/D:/ProjectTD/src/model/tasks/MoveTo.java</file>
             <file>file:/D:/ProjectTD/src/window/Grid.java</file>
             <file>file:/D:/ProjectTD/src/window/DrawPanel.java</file>
             <file>file:/D:/ProjectTD/src/model/tasks/Back.java</file>
+            <file>file:/D:/ProjectTD/src/window/Window.java</file>
         </group>
     </open-files>
 </project-private>

@@ -38,7 +38,7 @@ public class Grid {
                 if ((j == 5) || (j == 6) || (j == 4) || (j == 3)) {
                     grid[i][j] = 10;
                 }
-                if (i == 9) {
+                if (i == 13) {
                     grid[i][j] = 0;
                 }
             }

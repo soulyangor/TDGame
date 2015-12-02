@@ -112,4 +112,9 @@ public class Back implements Task{
         }
         Logic.setUnit(unit);
     }
+    
+    @Override
+    public String toString() {
+        return "Задача - отойти в точку (" + x + "," + y + ")";
+    }
 }
