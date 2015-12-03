@@ -15,8 +15,8 @@ import model.logics.Logic;
  *
  * @author Хозяин
  */
-public class Back implements Task{
-    
+public class Back implements Task {
+
     private Cell curCell;
     private Cell start;
     private final int x;
@@ -39,14 +39,18 @@ public class Back implements Task{
                     complete = true;
                     return;
                 }
+                defineAngle(unit, curCell);
             }
 
-            move(unit, curCell);
+            move(unit);
             double r = Math.sqrt(Math.pow(
                     Logic.toRealCoordinate(curCell.getX()) - unit.getX(), 2.0)
                     + Math.pow(Logic.toRealCoordinate(curCell.getY()) - unit.getY(), 2.0));
             if (r < unit.getSpeed()) {
                 curCell = curCell.getParent();
+                if (curCell != null) {
+                    defineAngle(unit, curCell);
+                }
             }
 
             complete = curCell == null;
@@ -80,12 +84,11 @@ public class Back implements Task{
         return tmp;
     }
 
-    private void move(Unit unit, Cell cell) {
+    private void defineAngle(Unit unit, Cell cell) {
         double ex = Logic.toRealCoordinate(cell.getX());
         double ey = Logic.toRealCoordinate(cell.getY());
         double ux = unit.getX();
         double uy = unit.getY();
-        double speed = unit.getSpeed();
         double angle = Math.atan((ey - uy) / (ex - ux));
         if ((ex - ux) < 0) {
             angle += Math.PI;
@@ -93,6 +96,14 @@ public class Back implements Task{
         if (angle < 0) {
             angle += 2 * Math.PI;
         }
+        unit.setAngle(angle);
+    }
+
+    private void move(Unit unit) {
+        double ux = unit.getX();
+        double uy = unit.getY();
+        double speed = unit.getSpeed();
+        double angle = unit.getAngle();
 
         Logic.setWalkablePlace(ux, uy);
 
@@ -101,8 +112,12 @@ public class Back implements Task{
 
         if (Logic.getUnit(c0x, c0y) != null) {
             unit.setStatus(Status.WAIT);
+            BackCells.addUnit(unit);
+            System.out.println(unit + ": не топаю");
         } else {
             unit.setStatus(Status.MOVE);
+            BackCells.removeUnit(unit);
+            System.out.println(unit + ": топаю");
         }
 
         if (unit.getStatus() == Status.MOVE) {
@@ -112,7 +127,7 @@ public class Back implements Task{
         }
         Logic.setUnit(unit);
     }
-    
+
     @Override
     public String toString() {
         return "Задача - отойти в точку (" + x + "," + y + ")";

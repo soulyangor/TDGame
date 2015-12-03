@@ -29,20 +29,23 @@ public class Grid {
     private Image imgShadow;
     private Graphics2D g2d;
 
+    private static final int S = 4;
+
     public Grid() {
         Random rand = new Random();
         grid = new int[14][14];
         for (int i = 0; i < 14; i++) {
             for (int j = 0; j < 14; j++) {
                 grid[i][j] = 0;
-                if ((j == 5) || (j == 6) || (j == 4) || (j == 3)) {
+                if ((j == 5) || (j == 6) || (j == 4) || (j == 3) || (j == 2) || (j == 0)) {
                     grid[i][j] = 10;
                 }
-                if (i == 13) {
+                if (i == S) {
                     grid[i][j] = 0;
                 }
             }
         }
+        grid[S][0] = 10;
         BufferedImage original = null;
         InputStream input = Window.class.getResourceAsStream("/resources/tile.png");
         try {

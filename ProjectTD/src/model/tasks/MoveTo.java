@@ -44,6 +44,7 @@ public class MoveTo implements Task {
                     complete = true;
                     return;
                 }
+                defineAngle(unit, curCell);
             }
 
             Unit u = Logic.getUnit(curCell);
@@ -58,17 +59,6 @@ public class MoveTo implements Task {
                 } else {
                     curCell = null;
                 }
-
-                /*    if (curCell != null) {
-                 double r = Math.sqrt(Math.pow(
-                 Logic.toRealCoordinate(curCell.getX()) - unit.getX(), 2.0)
-                 + Math.pow(Logic.toRealCoordinate(curCell.getY()) - unit.getY(), 2.0));
-                 if (r < unit.getSpeed()) {
-                 curCell = curCell.getParent();
-                 System.out.println(unit.toString() + ": стою в точке обхода, буду двигаться в ("
-                 + curCell.getX() + "," + curCell.getY() + ")");
-                 }
-                 }*/
                 BackCells.setWaitUnit();
                 if (curCell == null) {
                     System.out.println(unit + ": не могу обойти, прошу "
@@ -90,14 +80,54 @@ public class MoveTo implements Task {
                     }
                     return;
                 }
+                defineAngle(unit, curCell);
             }
 
-            move(unit, curCell);
+            u = getUnitByMove(unit);
+
+            if ((unit.getStatus() == Status.WAIT) && (u != null)
+                    && ((u.getStatus() == Status.WAIT) || (u.getStatus() == Status.STAND))) {
+                System.out.println(unit.toString() + ": не могу пройти, мешает "
+                        + u + ", пытаюсь обойти");
+                BackCells.setStandUnit(unit);
+                if (curCell.getParent() != null) {
+                    curCell = definePath(unit);
+                } else {
+                    curCell = null;
+                }
+                BackCells.setWaitUnit();
+                if (curCell == null) {
+                    System.out.println(unit + ": не могу обойти, прошу "
+                            + u + " отойти");
+                    Cell temp = findFreeCell(u);
+                    if (temp != null) {
+                        System.out.println(unit + ": " + u + " идёт в ("
+                                + temp.getX() + "," + temp.getY() + ")");
+                        u.setTask(new Back(temp));
+                    } else {
+                        System.out.println(unit + ": " + u + " не может отойти");
+                        temp = findFreeCell(unit);
+                        if (temp != null) {
+                            unit.setTask(new Back(temp));
+                            System.out.println(unit + ": отхожу сам");
+                        } else {
+                            System.out.println(unit + ": сам не могу отойти");
+                        }
+                    }
+                    return;
+                }
+                defineAngle(unit, curCell);
+            }
+
+            move(unit);
             double r = Math.sqrt(Math.pow(
                     Logic.toRealCoordinate(curCell.getX()) - unit.getX(), 2.0)
                     + Math.pow(Logic.toRealCoordinate(curCell.getY()) - unit.getY(), 2.0));
             if (r < unit.getSpeed()) {
                 curCell = curCell.getParent();
+                if (curCell != null) {
+                    defineAngle(unit, curCell);
+                }
             }
             if (r > 1.5 * Logic.getCellSize()) {
                 curCell = null;
@@ -169,12 +199,11 @@ public class MoveTo implements Task {
         return null;
     }
 
-    private void move(Unit unit, Cell cell) {
+    private void defineAngle(Unit unit, Cell cell) {
         double ex = Logic.toRealCoordinate(cell.getX());
         double ey = Logic.toRealCoordinate(cell.getY());
         double ux = unit.getX();
         double uy = unit.getY();
-        double speed = unit.getSpeed();
         double angle = Math.atan((ey - uy) / (ex - ux));
         if ((ex - ux) < 0) {
             angle += Math.PI;
@@ -182,13 +211,26 @@ public class MoveTo implements Task {
         if (angle < 0) {
             angle += 2 * Math.PI;
         }
+        unit.setAngle(angle);
+    }
 
+    private Unit getUnitByMove(Unit unit) {
+        double ux = unit.getX();
+        double uy = unit.getY();
+        double angle = unit.getAngle();
         Logic.setWalkablePlace(ux, uy);
-
         double c0x = ux + Logic.getCellSize() * Math.cos(angle) / 2;
         double c0y = uy + Logic.getCellSize() * Math.sin(angle) / 2;
+        return Logic.getUnit(c0x, c0y);
+    }
 
-        if (Logic.getUnit(c0x, c0y) != null) {
+    private void move(Unit unit) {
+        double ux = unit.getX();
+        double uy = unit.getY();
+        double speed = unit.getSpeed();
+        double angle = unit.getAngle();
+
+        if (getUnitByMove(unit) != null) {
             unit.setStatus(Status.WAIT);
             BackCells.addUnit(unit);
             System.out.println(unit + ": не топаю");

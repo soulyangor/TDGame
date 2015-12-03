@@ -43,8 +43,8 @@ public class DrawPanel extends JComponent implements Runnable {
         Logic.generate(14);
         Logic.setCellSize(50);
         p1 = new DrawablePerson(100, 450, "/resources/дядька.png");
-        p2 = new DrawablePerson(50, 100, "/resources/злой_дядька.png");
-        p3 = new DrawablePerson(100, 100, "/resources/щитоДядька.png");
+        p2 = new DrawablePerson(50, 50, "/resources/злой_дядька.png");
+        p3 = new DrawablePerson(100, 50, "/resources/щитоДядька.png");
         p4 = new DrawablePerson(50, 450, "/resources/лыцарь.png");
 
         p1.addTask(new MoveTo(50, 50));
