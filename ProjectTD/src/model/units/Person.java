@@ -5,22 +5,23 @@
  */
 package model.units;
 
+import model.components.Status;
 import model.components.Unit;
 
 /**
  *
  * @author Хозяин
  */
-public class Person extends Unit{
+public class Person extends Unit implements Moveable {
 
     private double viewDistance;
     private double healPoint;
-    
-    
-    public Person(double x, double y, double speed, double viewDistance, 
+    private double speed;
+
+    public Person(double x, double y, double speed, double viewDistance,
             double healPoint) {
         super(x, y);
-        super.setSpeed(speed);
+        this.speed = speed;
         this.viewDistance = viewDistance;
         this.healPoint = healPoint;
     }
@@ -40,5 +41,26 @@ public class Person extends Unit{
     public void setHealPoint(double healPoint) {
         this.healPoint = healPoint;
     }
-    
+
+    @Override
+    public void move() {
+        double ux = super.getX();
+        double uy = super.getY();
+        double angle = super.getAngle();
+        if (super.getStatus() == Status.MOVE) {
+            super.setX(ux + speed * Math.cos(angle));
+            super.setY(uy + speed * Math.sin(angle));
+        }
+    }
+
+    @Override
+    public void setSpeed(double value) {
+        this.speed = value;
+    }
+
+    @Override
+    public double getSpeed() {
+        return speed;
+    }
+
 }

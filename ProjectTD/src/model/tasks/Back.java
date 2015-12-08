@@ -9,7 +9,9 @@ import model.components.Status;
 import model.components.TDComponent;
 import model.components.Unit;
 import model.logics.Cell;
+import model.logics.GameField;
 import model.logics.Logic;
+import model.units.Person;
 
 /**
  *
@@ -18,7 +20,6 @@ import model.logics.Logic;
 public class Back implements Task {
 
     private Cell curCell;
-    private Cell start;
     private final int x;
     private final int y;
 
@@ -31,25 +32,24 @@ public class Back implements Task {
 
     @Override
     public void execute(TDComponent component) {
-        if (component instanceof Unit) {
-            Unit unit = (Unit) component;
+        if (component instanceof Person) {
+            Person person = (Person) component;
             if (curCell == null) {
-                curCell = definePath(unit);
+                curCell = definePath(person);
                 if (curCell == null) {
                     complete = true;
                     return;
                 }
-                defineAngle(unit, curCell);
+                defineAngle(person, curCell);
             }
 
-            move(unit);
-            double r = Math.sqrt(Math.pow(
-                    Logic.toRealCoordinate(curCell.getX()) - unit.getX(), 2.0)
-                    + Math.pow(Logic.toRealCoordinate(curCell.getY()) - unit.getY(), 2.0));
-            if (r < unit.getSpeed()) {
-                curCell = curCell.getParent();
+            move(person);
+            double r = Math.sqrt(Math.pow(GameField.toRealCoordinate(curCell.getX()) - person.getX(), 2.0)
+                    + Math.pow(GameField.toRealCoordinate(curCell.getY()) - person.getY(), 2.0));
+            if (r < person.getSpeed()) {
+                curCell = curCell.getCell();
                 if (curCell != null) {
-                    defineAngle(unit, curCell);
+                    defineAngle(person, curCell);
                 }
             }
 
@@ -76,17 +76,17 @@ public class Back implements Task {
     }
 
     private Cell definePath(Unit unit) {
-        int ex = Logic.toCellCoordinate(unit.getX());
-        int ey = Logic.toCellCoordinate(unit.getY());
-        Logic.setWalkablePlace(unit.getX(), unit.getY());
+        int ex = GameField.toCellCoordinate(unit.getX());
+        int ey = GameField.toCellCoordinate(unit.getY());
+        GameField.setWalkablePlace(unit.getX(), unit.getY());
         Cell tmp = Logic.searchPath(x, y, ex, ey);
-        Logic.setUnit(unit);
+        GameField.setUnit(unit);
         return tmp;
     }
 
     private void defineAngle(Unit unit, Cell cell) {
-        double ex = Logic.toRealCoordinate(cell.getX());
-        double ey = Logic.toRealCoordinate(cell.getY());
+        double ex = GameField.toRealCoordinate(cell.getX());
+        double ey = GameField.toRealCoordinate(cell.getY());
         double ux = unit.getX();
         double uy = unit.getY();
         double angle = Math.atan((ey - uy) / (ex - ux));
@@ -99,33 +99,28 @@ public class Back implements Task {
         unit.setAngle(angle);
     }
 
-    private void move(Unit unit) {
+    private Unit getUnitByMove(Unit unit) {
         double ux = unit.getX();
         double uy = unit.getY();
-        double speed = unit.getSpeed();
         double angle = unit.getAngle();
+        GameField.setWalkablePlace(ux, uy);
+        double c0x = ux + GameField.getCellSize() * Math.cos(angle) / 2;
+        double c0y = uy + GameField.getCellSize() * Math.sin(angle) / 2;
+        return GameField.getUnit(c0x, c0y);
+    }
 
-        Logic.setWalkablePlace(ux, uy);
-
-        double c0x = ux + Logic.getCellSize() * Math.cos(angle) / 2;
-        double c0y = uy + Logic.getCellSize() * Math.sin(angle) / 2;
-
-        if (Logic.getUnit(c0x, c0y) != null) {
-            unit.setStatus(Status.WAIT);
-            BackCells.addUnit(unit);
-            System.out.println(unit + ": не топаю");
+    private void move(Person person) {
+        if (getUnitByMove(person) != null) {
+            person.setStatus(Status.WAIT);
+            ConflictManager.addUnit(person);
+            System.out.println(person + ": не топаю");
         } else {
-            unit.setStatus(Status.MOVE);
-            BackCells.removeUnit(unit);
-            System.out.println(unit + ": топаю");
-        }
-
-        if (unit.getStatus() == Status.MOVE) {
-            unit.setAngle(angle);
-            unit.setX(ux + speed * Math.cos(angle));
-            unit.setY(uy + speed * Math.sin(angle));
-        }
-        Logic.setUnit(unit);
+            person.setStatus(Status.MOVE);
+            ConflictManager.removeUnit(person);
+            System.out.println(person + ": топаю");
+        }        
+        person.move();        
+        GameField.setUnit(person);
     }
 
     @Override

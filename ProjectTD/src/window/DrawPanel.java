@@ -5,7 +5,6 @@
  */
 package window;
 
-import com.oracle.jrockit.jfr.ValueDefinition;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -16,11 +15,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
-import model.logics.Logic;
 import model.components.SortedByY;
 import model.components.TDComponent;
 import model.components.Unit;
 import model.components.UnitGroup;
+import model.logics.GameField;
 import model.tasks.MoveTo;
 
 /**
@@ -40,12 +39,16 @@ public class DrawPanel extends JComponent implements Runnable {
         super();
         iter = 0;
         grid = new Grid();
-        Logic.generate(14);
-        Logic.setCellSize(50);
+        GameField.generate(14);
+        GameField.setCellSize(50);
         p1 = new DrawablePerson(100, 450, "/resources/дядька.png");
+        GameField.setUnit(p1);
         p2 = new DrawablePerson(50, 50, "/resources/злой_дядька.png");
+        GameField.setUnit(p2);
         p3 = new DrawablePerson(100, 50, "/resources/щитоДядька.png");
+        GameField.setUnit(p3);
         p4 = new DrawablePerson(50, 450, "/resources/лыцарь.png");
+        GameField.setUnit(p4);
 
         p1.addTask(new MoveTo(50, 50));
         p2.addTask(new MoveTo(350, 350));
@@ -81,8 +84,8 @@ public class DrawPanel extends JComponent implements Runnable {
         for (int i = 0; i < 14; i++) {
             for (int j = 0; j < 14; j++) {
                 if (grid.getGrid()[i][j] > 0) {
-                    Box b = new Box(Logic.toRealCoordinate(i), Logic.toRealCoordinate(j));
-                    Logic.setUnit(b);
+                    Box b = new Box(GameField.toRealCoordinate(i), GameField.toRealCoordinate(j));
+                    GameField.setUnit(b);
                     group.add(b);
                 }
             }
@@ -153,6 +156,7 @@ public class DrawPanel extends JComponent implements Runnable {
                 dp.draw();
             }
         }
+        Effects.draw(g2d);
         g2d.drawRect(0, 0, 700, 500);
     }
 

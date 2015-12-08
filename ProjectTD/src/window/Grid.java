@@ -24,9 +24,7 @@ import javax.imageio.ImageIO;
 public class Grid {
 
     private int[][] grid;
-    private Image image;
-    private Image imgTw;
-    private Image imgShadow;
+    private final Image image;
     private Graphics2D g2d;
 
     private static final int S = 4;
@@ -37,7 +35,7 @@ public class Grid {
         for (int i = 0; i < 14; i++) {
             for (int j = 0; j < 14; j++) {
                 grid[i][j] = 0;
-                if ((j == 5) || (j == 6) || (j == 4) || (j == 3) || (j == 2) || (j == 0)) {
+                if ((j == 5) || (j == 6) || (j == 4) || (j == 3) || (j == 2) /*|| (j == 0)*/) {
                     grid[i][j] = 10;
                 }
                 if (i == S) {

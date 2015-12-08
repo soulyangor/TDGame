@@ -8,18 +8,29 @@ package model.components;
 import java.util.Iterator;
 
 /**
+ * Нулевой итератор
  *
  * @author Хозяин
  */
-public class NullIterator implements Iterator {
+public class NullIterator implements Iterator<TDComponent> {
 
+    /**
+     * Возвращает false
+     *
+     * @return false
+     */
     @Override
     public boolean hasNext() {
         return false;
     }
 
+    /**
+     * возвращает null
+     *
+     * @return null
+     */
     @Override
-    public Object next() {
+    public TDComponent next() {
         return null;
     }
 

@@ -101,7 +101,7 @@ public class DrawablePerson extends Person {
         while (cell != null) {
             g2d.drawArc(cell.getX() * 50 + 15 + d, cell.getY() * 50 + 15 + d,
                     20 - 2 * d, 20 - 2 * d, 0, 360);
-            cell = cell.getParent();
+            cell = cell.getCell();
         }
         calcFrame();
     }

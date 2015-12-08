@@ -3,14 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.components;
+package model.units;
+
+import model.components.Unit;
 
 /**
- * Перечисление возможных состояний у класса Unit
  *
- * @author Sokolov@ivc.org
+ * @author Вячеслав
  */
-public enum Status {
+public class Shell extends Unit{
 
-    STAND, WAIT, MOVE, ATTACK, DAMAGED
+    public Shell(double x, double y) {
+        super(x, y);
+    }
+    
 }

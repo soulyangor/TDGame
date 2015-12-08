@@ -9,23 +9,34 @@ import java.util.Iterator;
 import java.util.Stack;
 
 /**
+ * Итератор для перебора дерева сомпонентов
  *
  * @author Хозяин
  */
-public class GroupIterator implements Iterator {
+public class GroupIterator implements Iterator<TDComponent> {
 
-    private final Stack stack = new Stack();
+    private final Stack<Iterator<TDComponent>> stack = new Stack<>();
 
-    public GroupIterator(Iterator iterator) {
+    /**
+     * Конструктор, помещает в стек итератор
+     *
+     * @param iterator Iterator
+     */
+    public GroupIterator(Iterator<TDComponent> iterator) {
         stack.push(iterator);
     }
 
+    /**
+     * Проверяет наличие следующего элемента в переборе
+     *
+     * @return boolean
+     */
     @Override
     public boolean hasNext() {
         if (stack.empty()) {
             return false;
         } else {
-            Iterator iterator = (Iterator) stack.peek();
+            Iterator<TDComponent> iterator = stack.peek();
             if (!iterator.hasNext()) {
                 stack.pop();
                 return hasNext();
@@ -35,11 +46,16 @@ public class GroupIterator implements Iterator {
         }
     }
 
+    /**
+     * Возвращает следующий элементв переборе
+     *
+     * @return TDComponent
+     */
     @Override
-    public Object next() {
+    public TDComponent next() {
         if (hasNext()) {
-            Iterator iterator = (Iterator) stack.peek();
-            TDComponent component = (TDComponent) iterator.next();
+            Iterator<TDComponent> iterator = stack.peek();
+            TDComponent component = iterator.next();
             if (component instanceof UnitGroup) {
                 stack.push(component.createIterator());
             }

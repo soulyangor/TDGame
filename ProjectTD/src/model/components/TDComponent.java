@@ -12,6 +12,7 @@ import model.tasks.MoveTo;
 import model.tasks.Task;
 
 /**
+ * Верхний компонент для описания всех элементов TD
  *
  * @author Хозяин
  */
@@ -21,16 +22,38 @@ public abstract class TDComponent implements Iterable<TDComponent> {
     private Task executedTask;
     private final Queue<Task> tasks;
 
+    /**
+     * Конструктор класса Создает внутри себя пустой список задач(task)
+     */
     public TDComponent() {
         this.tasks = new LinkedList<>();
     }
 
+    /**
+     * Абстрактный метод для создания итератора
+     *
+     * @return Iterator
+     */
     public abstract Iterator createIterator();
 
-    public void setTask(Task task) {
+    /**
+     * Устанавливает срочную задачу
+     *
+     * @param task Task
+     */
+    public void setSpeedTask(Task task) {
         this.speedTask = task;
     }
 
+    /**
+     * Добавляет задачу в список задач. Если исполняемая задача не
+     * определена(это возможно, если список задач пуст), то добавляемая задача
+     * устанавливается как исполняемая, в противном случае задача добавляется в
+     * список задач. Фактически, исполняемая задача, является первой задачей из
+     * списка задач
+     *
+     * @param task Task
+     */
     public void addTask(Task task) {
         if (executedTask == null) {
             this.executedTask = task;
@@ -39,13 +62,21 @@ public abstract class TDComponent implements Iterable<TDComponent> {
         tasks.offer(task);
     }
 
+    /**
+     * Исполнение задачи. Порядок выполнения: Если задана срочная задача и она
+     * не выполнена, то исполняется она. Если Срочная задача не установлена или
+     * выполнена, то исполняется текущая задача, если таковая определена Если
+     * исполняемая задача завершена, то она помечается как незавершенная и
+     * добавляется к концу списка задач, а в качестве исполняемой
+     * устанавливается первая задача из списка
+     */
     public void executeTask() {
         if ((speedTask != null) && (!speedTask.isComplete())) {
             speedTask.execute(this);
             System.out.println(speedTask);
             return;
         }
-        if ((executedTask == null) || (tasks.isEmpty())) {
+        if (executedTask == null) {
             return;
         }
         System.out.println(executedTask);
@@ -65,7 +96,7 @@ public abstract class TDComponent implements Iterable<TDComponent> {
         throw new UnsupportedOperationException();
     }
 
-    TDComponent getChild(int i) {
+    public TDComponent getChild(int i) {
         throw new UnsupportedOperationException();
     }
 
@@ -74,9 +105,10 @@ public abstract class TDComponent implements Iterable<TDComponent> {
         return createIterator();
     }
 
-    // Временный метод для отладки
+    // Временный метод для отладки, возвращает текущую исполняемую задачу
+    // (не срочную)
     public MoveTo getExecutedTask() {
-        return (MoveTo)executedTask;
+        return (MoveTo) executedTask;
     }
 
 }
