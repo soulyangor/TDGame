@@ -85,8 +85,10 @@ public class DrawablePerson extends Person {
             g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
                     0, fy * 64, 64, (fy + 1) * 64, null);
         } else {
-            g2d.drawImage(image, (int) x - 1*32, (int) y - 2*32, (int) x + 3*32, (int) y + 2*32,
+            g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
                     currentFrame * 64, fy * 64, (currentFrame + 1) * 64, (fy + 1) * 64, null);
+            /*g2d.drawImage(image, (int) x - 1*32, (int) y - 2*32, (int) x + 3*32, (int) y + 2*32,
+             currentFrame * 64, fy * 64, (currentFrame + 1) * 64, (fy + 1) * 64, null);*/
         }
         g2d.setColor(color);
         g2d.drawLine((int) x, (int) y,
@@ -116,10 +118,18 @@ public class DrawablePerson extends Person {
 
     @Override
     public String toString() {
-        if(this.color == Color.RED){return "Красный";}
-        if(this.color == Color.BLUE){return "Синий";}
-        if(this.color == Color.CYAN){return "Бирюзовый";}
-        if(this.color == Color.BLACK){return "Чёрный";}
+        if (this.color == Color.RED) {
+            return "Красный";
+        }
+        if (this.color == Color.BLUE) {
+            return "Синий";
+        }
+        if (this.color == Color.CYAN) {
+            return "Бирюзовый";
+        }
+        if (this.color == Color.BLACK) {
+            return "Чёрный";
+        }
         return "другой цвет";
     }
 

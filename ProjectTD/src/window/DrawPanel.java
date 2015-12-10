@@ -47,10 +47,10 @@ public class DrawPanel extends JComponent implements Runnable {
         grid = new Grid();
         GameField.generate(14);
         GameField.setCellSize(50);
-        
+
         WorldGrid.getInstance().generate(14);
         WorldGrid.getInstance().setCellSize(50);
-        
+
         p1 = new DrawablePerson(100, 450, "/resources/дядька.png");
         GameField.setUnit(p1);
         p2 = new DrawablePerson(50, 50, "/resources/злой_дядька.png");
@@ -60,11 +60,14 @@ public class DrawPanel extends JComponent implements Runnable {
         p4 = new DrawablePerson(50, 450, "/resources/лыцарь.png");
         GameField.setUnit(p4);
 
-        p1.addTask(new MoveAreaTo(50, 50));
-        p1.addTask(new MoveAreaTo(350, 50));
-        p1.addTask(new MoveAreaTo(350, 350));
-        p1.addTask(new MoveAreaTo(50, 350));
-/*
+        /*     p1.addTask(new MoveAreaTo(50, 50));
+         p1.addTask(new MoveAreaTo(350, 50));
+         p1.addTask(new MoveAreaTo(350, 350));
+         p1.addTask(new MoveAreaTo(50, 350));*/
+        p1.addTask(new MoveTo(50, 50));
+        p1.addTask(new MoveTo(350, 50));
+        p1.addTask(new MoveTo(350, 350));
+        p1.addTask(new MoveTo(50, 350));
         p2.addTask(new MoveTo(350, 350));
         p2.addTask(new MoveTo(350, 50));
         p2.addTask(new MoveTo(50, 50));
@@ -79,11 +82,7 @@ public class DrawPanel extends JComponent implements Runnable {
         p4.addTask(new MoveTo(350, 50));
         p4.addTask(new MoveTo(50, 50));
         p4.addTask(new MoveTo(50, 350));
-*/
-        /* p1.addTask(new FMove(50, 50, group));
-         p1.addTask(new FMove(350, 50, group));
-         p1.addTask(new FMove(350, 350, group));
-         p1.addTask(new FMove(50, 350, group));*/
+
         //Временные операции
         p1.color = Color.BLUE;
         p2.color = Color.RED;
@@ -105,9 +104,9 @@ public class DrawPanel extends JComponent implements Runnable {
         }
 
         group.add(p1);
-       /* group.add(p2);
-        group.add(p3);
-        group.add(p4);*/
+         group.add(p2);
+         group.add(p3);
+         group.add(p4);
         new Thread(this).start();
     }
 

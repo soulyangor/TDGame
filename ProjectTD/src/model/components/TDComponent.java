@@ -108,8 +108,12 @@ public abstract class TDComponent implements Iterable<TDComponent> {
 
     // Временный метод для отладки, возвращает текущую исполняемую задачу
     // (не срочную)
-    public MoveAreaTo getExecutedTask() {
+    /*public MoveAreaTo getExecutedTask() {
         return (MoveAreaTo) executedTask;
+    }*/
+
+    public MoveTo getExecutedTask() {
+        return (MoveTo) executedTask;
     }
 
 }
