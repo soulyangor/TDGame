@@ -23,11 +23,11 @@ public class Love {
 
     private final int frames = 7;
     private int currentFrame = 1;
-    public int show = 0;
+    private int liveTime = 0;
 
     private Unit unit;
 
-    private final Image image;
+    private Image image;
 
     public Love(Unit unit) {
         this.unit = unit;
@@ -49,10 +49,21 @@ public class Love {
         calcFrame();
     }
 
+    public void clearImage() {
+        this.image = null;
+    }
+
+    public int getLiveTime() {
+        return liveTime;
+    }
+
+    public void update() {
+        liveTime++;
+    }
+
     private void calcFrame() {
         if (currentFrame == frames) {
             currentFrame = 0;
-            show++;
         } else {
             currentFrame++;
         }

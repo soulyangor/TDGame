@@ -9,7 +9,7 @@ import model.components.Status;
 import model.components.TDComponent;
 import model.components.Unit;
 import model.logics.Cell;
-import model.logics.GameField;
+import model.logics.grids.GameField;
 import model.logics.Logic;
 import model.units.Person;
 

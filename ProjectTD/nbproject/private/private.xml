@@ -3,21 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/ProjectTD/src/model/tasks/Task.java</file>
-            <file>file:/G:/ProjectTD/src/model/components/Unit.java</file>
-            <file>file:/G:/ProjectTD/src/model/components/UnitGroup.java</file>
-            <file>file:/G:/ProjectTD/src/model/components/NullIterator.java</file>
-            <file>file:/G:/ProjectTD/src/model/components/Status.java</file>
-            <file>file:/G:/ProjectTD/src/model/logics/GameField.java</file>
-            <file>file:/G:/ProjectTD/src/model/components/SortedByY.java</file>
-            <file>file:/G:/ProjectTD/src/model/tasks/ConflictManager.java</file>
-            <file>file:/G:/ProjectTD/src/model/components/TDComponent.java</file>
-            <file>file:/G:/ProjectTD/src/model/tasks/MoveTo.java</file>
-            <file>file:/G:/ProjectTD/src/model/logics/GridMap.java</file>
-            <file>file:/G:/ProjectTD/src/model/tasks/Back.java</file>
-            <file>file:/G:/ProjectTD/src/model/logics/Cell.java</file>
-            <file>file:/G:/ProjectTD/src/model/logics/Logic.java</file>
-            <file>file:/G:/ProjectTD/src/model/components/GroupIterator.java</file>
+            <file>file:/F:/ProjectTD/src/model/logics/AreaLogic.java</file>
         </group>
     </open-files>
 </project-private>

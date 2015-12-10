@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import model.logics.GameField;
+import model.logics.grids.GameField;
 import model.units.Building;
 
 /**

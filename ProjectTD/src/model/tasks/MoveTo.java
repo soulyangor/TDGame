@@ -10,7 +10,7 @@ import model.logics.Logic;
 import model.components.Status;
 import model.components.TDComponent;
 import model.components.Unit;
-import model.logics.GameField;
+import model.logics.grids.GameField;
 import model.units.Person;
 import window.Effects;
 import window.Love;

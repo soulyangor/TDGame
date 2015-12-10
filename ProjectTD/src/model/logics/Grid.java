@@ -5,13 +5,16 @@
  */
 package model.logics;
 
+import model.logics.Cell;
+
 /**
+ * Абстрактный класс карты
  *
  * @author Sokolov@ivc.org
  */
 public abstract class Grid {
-    
-    public abstract double toRealCoordinate(int arg); 
+
+    public abstract double toRealCoordinate(int arg);
 
     public abstract int toCellCoordinate(double arg);
 
@@ -22,5 +25,5 @@ public abstract class Grid {
     public abstract boolean isWalkable(int i, int j);
 
     public abstract boolean isWalkable(Cell cell);
-    
+
 }

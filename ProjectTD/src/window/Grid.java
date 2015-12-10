@@ -30,7 +30,6 @@ public class Grid {
     private static final int S = 4;
 
     public Grid() {
-        Random rand = new Random();
         grid = new int[14][14];
         for (int i = 0; i < 14; i++) {
             for (int j = 0; j < 14; j++) {
@@ -38,12 +37,11 @@ public class Grid {
                 if ((j == 5) || (j == 6) || (j == 4) || (j == 3) || (j == 2) /*|| (j == 0)*/) {
                     grid[i][j] = 10;
                 }
-                if (i == S) {
+                if ((i == S)||(i == S + 1)) {
                     grid[i][j] = 0;
                 }
             }
         }
-        grid[S][0] = 10;
         BufferedImage original = null;
         InputStream input = Window.class.getResourceAsStream("/resources/tile.png");
         try {
@@ -52,6 +50,8 @@ public class Grid {
             Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         image = original.getScaledInstance(64, 64, 1);
+        original = null;
+        input = null;
         /*input = Window.class.getResourceAsStream("/resources/shadow.png");
          try {
          original = ImageIO.read(input);

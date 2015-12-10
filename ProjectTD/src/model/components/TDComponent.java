@@ -8,6 +8,7 @@ package model.components;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import model.tasks.MoveAreaTo;
 import model.tasks.MoveTo;
 import model.tasks.Task;
 
@@ -107,8 +108,8 @@ public abstract class TDComponent implements Iterable<TDComponent> {
 
     // Временный метод для отладки, возвращает текущую исполняемую задачу
     // (не срочную)
-    public MoveTo getExecutedTask() {
-        return (MoveTo) executedTask;
+    public MoveAreaTo getExecutedTask() {
+        return (MoveAreaTo) executedTask;
     }
 
 }

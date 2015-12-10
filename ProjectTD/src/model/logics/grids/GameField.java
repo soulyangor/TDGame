@@ -3,28 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.logics;
+package model.logics.grids;
 
 import model.components.Status;
 import model.components.Unit;
+import model.logics.Cell;
 
 /**
+ * Класс для хранения карты проходимости и преобразования координат
  *
- * @author Вячеслав
+ * @author Хозяин
  */
-public class WorldGrid extends Grid {
+public class GameField{
 
-    private final static WorldGrid INSTANCE = new WorldGrid();
-    private Unit[][] map;
-    private int mapSize;
-    private int cellSize;
+    /*-----------------------------------Static fields---------------------------------------*/
+    private static Unit[][] map;
+    private static int mapSize;
+    private static int cellSize;
 
     /*---------------------------------Default constructor-----------------------------------*/
-    private WorldGrid() {
-    }
-
-    public static WorldGrid getInstance() {
-        return INSTANCE;
+    private GameField() {
     }
 
     /**
@@ -35,9 +33,8 @@ public class WorldGrid extends Grid {
      * @param arg int
      * @return double
      */
-    @Override
-    public double toRealCoordinate(int arg) {
-        return cellSize * (arg + 0.5);
+    public static double toRealCoordinate(int arg) {
+        return GameField.cellSize * (arg + 0.5);
     }
 
     /**
@@ -47,9 +44,8 @@ public class WorldGrid extends Grid {
      * @param arg double
      * @return int
      */
-    @Override
-    public int toCellCoordinate(double arg) {
-        return (int) (arg / cellSize);
+    public static int toCellCoordinate(double arg) {
+        return (int) (arg / GameField.cellSize);
     }
 
     /**
@@ -58,9 +54,9 @@ public class WorldGrid extends Grid {
      * @param map Unit[][]
      * @param mapSize int
      */
-    public void setMap(Unit[][] map, int mapSize) {
-        this.map = map;
-        this.mapSize = mapSize;
+    public static void setMap(Unit[][] map, int mapSize) {
+        GameField.map = map;
+        GameField.mapSize = mapSize;
     }
 
     /**
@@ -68,8 +64,7 @@ public class WorldGrid extends Grid {
      *
      * @return int
      */
-    @Override
-    public int getMapSize() {
+    public static int getMapSize() {
         return mapSize;
     }
 
@@ -78,12 +73,12 @@ public class WorldGrid extends Grid {
      *
      * @param mapSize int
      */
-    public void generate(int mapSize) {
-        this.mapSize = mapSize;
-        this.map = new Unit[mapSize][mapSize];
+    public static void generate(int mapSize) {
+        GameField.mapSize = mapSize;
+        GameField.map = new Unit[mapSize][mapSize];
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
-                this.map[i][j] = null;
+                GameField.map[i][j] = null;
             }
         }
     }
@@ -94,10 +89,10 @@ public class WorldGrid extends Grid {
      * @param x double
      * @param y double
      */
-    public void setWalkablePlace(double x, double y) {
+    public static void setWalkablePlace(double x, double y) {
         int i = toCellCoordinate(x);
         int j = toCellCoordinate(y);
-        map[i][j] = null;
+        GameField.map[i][j] = null;
     }
 
     /**
@@ -106,8 +101,8 @@ public class WorldGrid extends Grid {
      * @param i int
      * @param j int
      */
-    public void setWalkablePlace(int i, int j) {
-        map[i][j] = null;
+    public static void setWalkablePlace(int i, int j) {
+        GameField.map[i][j] = null;
     }
 
     /**
@@ -115,10 +110,10 @@ public class WorldGrid extends Grid {
      *
      * @param cell Cell
      */
-    public void setWalkablePlace(Cell cell) {
+    public static void setWalkablePlace(Cell cell) {
         int i = cell.getX();
         int j = cell.getY();
-        map[i][j] = null;
+        GameField.map[i][j] = null;
     }
 
     /**
@@ -126,10 +121,10 @@ public class WorldGrid extends Grid {
      *
      * @param unit Unit
      */
-    public void setUnit(Unit unit) {
+    public static void setUnit(Unit unit) {
         int i = toCellCoordinate(unit.getX());
         int j = toCellCoordinate(unit.getY());
-        map[i][j] = unit;
+        GameField.map[i][j] = unit;
     }
 
     /**
@@ -138,10 +133,10 @@ public class WorldGrid extends Grid {
      * @param cell Cell
      * @return Unit
      */
-    public Unit getUnit(Cell cell) {
+    public static Unit getUnit(Cell cell) {
         int i = cell.getX();
         int j = cell.getY();
-        return map[i][j];
+        return GameField.map[i][j];
     }
 
     /**
@@ -152,10 +147,10 @@ public class WorldGrid extends Grid {
      * @param y double
      * @return Unit
      */
-    public Unit getUnit(double x, double y) {
+    public static Unit getUnit(double x, double y) {
         int i = toCellCoordinate(x);
         int j = toCellCoordinate(y);
-        return map[i][j];
+        return GameField.map[i][j];
     }
 
     /**
@@ -165,8 +160,8 @@ public class WorldGrid extends Grid {
      * @param j int
      * @return Unit
      */
-    public Unit getUnit(int i, int j) {
-        return map[i][j];
+    public static Unit getUnit(int i, int j) {
+        return GameField.map[i][j];
     }
 
     /**
@@ -174,7 +169,7 @@ public class WorldGrid extends Grid {
      *
      * @return int
      */
-    public int getCellSize() {
+    public static int getCellSize() {
         return cellSize;
     }
 
@@ -183,8 +178,8 @@ public class WorldGrid extends Grid {
      *
      * @param cellSize int
      */
-    public void setCellSize(int cellSize) {
-        this.cellSize = cellSize;
+    public static void setCellSize(int cellSize) {
+        GameField.cellSize = cellSize;
     }
 
     /**
@@ -194,25 +189,10 @@ public class WorldGrid extends Grid {
      * @param y double
      * @return boolean
      */
-    @Override
-    public boolean isWalkable(double x, double y) {
+    public static boolean isWalkable(double x, double y) {
         int i = toCellCoordinate(x);
         int j = toCellCoordinate(y);
-        return (!((map[i][j] != null)
-                && (map[i][j].getStatus() == Status.STAND)));
-    }
-
-    /**
-     * Проверяет, проходима ли ячейка с координатами (i, j)
-     *
-     * @param i int
-     * @param j int
-     * @return boolean
-     */
-    @Override
-    public boolean isWalkable(int i, int j) {
-        return (!((map[i][j] != null)
-                && (map[i][j].getStatus() == Status.STAND)));
+        return isWalkable(i, j);
     }
 
     /**
@@ -221,12 +201,22 @@ public class WorldGrid extends Grid {
      * @param cell Cell
      * @return boolean
      */
-    @Override
-    public boolean isWalkable(Cell cell) {
+    public static boolean isWalkable(Cell cell) {
         int i = cell.getX();
         int j = cell.getY();
-        return (!((map[i][j] != null)
-                && (map[i][j].getStatus() == Status.STAND)));
+        return isWalkable(i, j);
+    }
+    
+    /**
+     * Проверяет, проходима ли ячейка с координатами (i, j)
+     *
+     * @param i int
+     * @param j int
+     * @return boolean
+     */
+    public static boolean isWalkable(int i, int j) {
+        return (!((GameField.map[i][j] != null)
+                && (GameField.map[i][j].getStatus() == Status.STAND)));
     }
 
 }

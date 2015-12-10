@@ -28,7 +28,7 @@ public class DrawablePerson extends Person {
     private int currentFrame = 1;
 
     private Graphics2D g2d;
-    private Image image;
+    private final Image image;
 
     public boolean isAtack;
     public boolean atacking = false;
@@ -85,7 +85,7 @@ public class DrawablePerson extends Person {
             g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
                     0, fy * 64, 64, (fy + 1) * 64, null);
         } else {
-            g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
+            g2d.drawImage(image, (int) x - 1*32, (int) y - 2*32, (int) x + 3*32, (int) y + 2*32,
                     currentFrame * 64, fy * 64, (currentFrame + 1) * 64, (fy + 1) * 64, null);
         }
         g2d.setColor(color);

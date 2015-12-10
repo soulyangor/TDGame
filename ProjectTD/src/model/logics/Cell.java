@@ -10,11 +10,11 @@ public class Cell {
 
     private final int x;
     private final int y;
+    private final String key;
     private Cell cell;
     private double g;
     private double h;
     private double f;
-    private String key = "";
 
     /**
      * Конструктор. Создаёт точку с координатами (x, y), нулевым указателем на
@@ -30,6 +30,7 @@ public class Cell {
         this.g = 0;
         this.h = 0;
         this.f = 0;
+        this.key = Integer.toString(this.x) + "|" + Integer.toString(this.y);
     }
 
     /**
@@ -119,9 +120,6 @@ public class Cell {
      * @return String
      */
     public final String getKey() {
-        if (this.key.isEmpty()) {
-            this.key = Integer.toString(this.x) + "|" + Integer.toString(this.y);
-        }
         return key;
     }
 

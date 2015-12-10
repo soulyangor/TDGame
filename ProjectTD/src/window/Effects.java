@@ -8,6 +8,7 @@ package window;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -15,22 +16,30 @@ import java.util.List;
  */
 public class Effects {
 
-    private static final List<Love> loves = new ArrayList<>();
+    private static final List<Love> loves = new CopyOnWriteArrayList<>();
 
     private Effects() {
     }
 
     public static void draw(Graphics2D g2d) {
-        List<Love> removedLoves = new ArrayList<>();
         for (Love l : loves) {
             l.draw(g2d);
-            if (l.show == 6) {
-                removedLoves.add(l);
+        }
+    }
+
+    public static void update() {
+        List<Love> removeList = new ArrayList<>();
+        for (Love l : loves) {
+            l.update();
+            if (l.getLiveTime() > 20) {
+                removeList.add(l);
             }
         }
-        for (Love l : removedLoves) {
+        for (Love l : removeList) {
+            l.clearImage();
             loves.remove(l);
         }
+        removeList = null;
     }
 
     public static void add(Love love) {
