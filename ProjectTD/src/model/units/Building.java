@@ -11,10 +11,20 @@ import model.components.Unit;
  *
  * @author Хозяин
  */
-public class Building extends Unit{
+public class Building extends Unit implements VisibleArea {
 
     public Building(double x, double y) {
         super(x, y);
+    }
+
+    @Override
+    public double getViewDistance() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Unit getUnit() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

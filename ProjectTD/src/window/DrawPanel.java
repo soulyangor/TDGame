@@ -188,5 +188,14 @@ public class DrawPanel extends JComponent implements Runnable {
         Effects.draw(g2d);
         g2d.drawRect(0, 0, 700, 500);
     }
+    
+    public Grid getGrid(){
+        return this.grid;
+    }
+    
+    public void setGrid(Grid g){
+        this.grid =  g; 
+    }
+    
 
 }
