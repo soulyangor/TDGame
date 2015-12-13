@@ -54,6 +54,11 @@ public class AreaLogic {
         boolean complete = false;
         int fi = -1;
         int fj = -1;
+        /* for (Place pl : area.getPlaces()) {
+         if ((pl.getCell(x, y).getX() == x0) && (pl.getCell(x, y).getY() == y0)) {
+         return null;
+         }
+         }*/
         while ((openPoints.size() > 0) && (!complete)) {
             curCell = findPointByFmin(openPoints);
             String key = curCell.getKey();
@@ -70,19 +75,20 @@ public class AreaLogic {
                 if (manageValue == -1) {
                     break;
                 }
-                if (isComplete(i, j, x, y)) {
-                    complete = true;
-                    fi = i;
-                    fj = j;
-                } //(i == x) && (j == y);
+                /* if (isComplete(i, j, x, y)) {
+                 complete = true;
+                 fi = i;
+                 fj = j;
+                 }*/
+                complete = (i == x) && (j == y);
                 manageLoopByPoints(i, j, x, y, curCell,
                         openPoints, closePoints);
             }
         }
 
-        String key = Integer.toString(fi) + "|" + Integer.toString(fj);
+        String key = Integer.toString(x) + "|" + Integer.toString(y);
+        //String key = Integer.toString(fi) + "|" + Integer.toString(fj);
         curCell = openPoints.get(key);
-        //curCell.setCell(null);
         openPoints.clear();
         closePoints.clear();
         return curCell;

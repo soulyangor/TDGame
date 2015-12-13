@@ -214,7 +214,7 @@ public class MoveTo implements Task {
                 }
                 if ((Math.abs(cell.getX() - i) + Math.abs(cell.getY() - j) == 2)
                         && ((GameField.getUnit(i, cell.getY()) != null)
-                        || (GameField.getUnit(i, cell.getX()) != null))) {
+                        || (GameField.getUnit(cell.getX(), i) != null))) {
                     continue;
                 }
                 Cell c = new Cell(i, j);
@@ -265,8 +265,8 @@ public class MoveTo implements Task {
             person.setStatus(Status.MOVE);
             ConflictManager.removeUnit(person);
             System.out.println(person + ": топаю");
-        }        
-        person.move();        
+        }
+        person.move();
         GameField.setUnit(person);
     }
 

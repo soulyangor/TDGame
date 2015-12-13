@@ -33,19 +33,25 @@ public class Square extends Area {
     @Override
     public void generate() {
         if (places.isEmpty()) {
+            if (size <= 1) {
+                places.add(new Place(0, 0));
+                return;
+            }
             for (int i = 0; i < size; i++) {
                 places.add(new Place(i, 0));
                 if (size > 1) {
                     places.add(new Place(i, size - 1));
                 }
-                if (i != 0) {
+                if ((i != 0) && (i != size - 1)) {
                     places.add(new Place(0, i));
-                }
-                if (i != size - 1) {
-                    places.add(new Place(size - 1, i));
                 }
             }
         }
+    }
+
+    @Override
+    public int getSize() {
+        return size;
     }
 
 }

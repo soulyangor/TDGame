@@ -8,7 +8,10 @@ package model.logics.grids;
 import model.logics.Grid;
 import model.components.Status;
 import model.components.Unit;
+import model.logics.Area;
 import model.logics.Cell;
+import model.logics.Place;
+import model.units.Insertable;
 
 /**
  * Класс карты. Синглтон. Предназначен для хранения карты проходимости и
@@ -16,8 +19,8 @@ import model.logics.Cell;
  *
  * @author Вячеслав
  */
-public class WorldGrid extends Grid {
-
+public class WorldGrid extends Grid<Unit> {
+    
     private final static WorldGrid INSTANCE = new WorldGrid();
     private Unit[][] map;
     private int mapSize;
@@ -26,7 +29,7 @@ public class WorldGrid extends Grid {
     /*---------------------------------Default constructor-----------------------------------*/
     private WorldGrid() {
     }
-
+    
     public static WorldGrid getInstance() {
         return INSTANCE;
     }
@@ -98,10 +101,11 @@ public class WorldGrid extends Grid {
      * @param x double
      * @param y double
      */
+    @Override
     public void setWalkablePlace(double x, double y) {
         int i = toCellCoordinate(x);
         int j = toCellCoordinate(y);
-        map[i][j] = null;
+        setWalkablePlace(i, j);
     }
 
     /**
@@ -110,8 +114,18 @@ public class WorldGrid extends Grid {
      * @param i int
      * @param j int
      */
+    @Override
     public void setWalkablePlace(int i, int j) {
-        map[i][j] = null;
+        if (map[i][j] instanceof Insertable) {
+            Area area = ((Insertable) map[i][j]).getArea();
+            for (Place pl : area.getPlaces()) {
+                int ii = pl.getCell(i, j).getX();
+                int jj = pl.getCell(i, j).getY();
+                map[ii][jj] = null;
+            }
+        } else {
+            map[i][j] = null;
+        }
     }
 
     /**
@@ -119,10 +133,11 @@ public class WorldGrid extends Grid {
      *
      * @param cell Cell
      */
+    @Override
     public void setWalkablePlace(Cell cell) {
         int i = cell.getX();
         int j = cell.getY();
-        map[i][j] = null;
+        setWalkablePlace(i, j);
     }
 
     /**
@@ -130,10 +145,20 @@ public class WorldGrid extends Grid {
      *
      * @param unit Unit
      */
-    public void setUnit(Unit unit) {
+    @Override
+    public void setCellValue(Unit unit) {
         int i = toCellCoordinate(unit.getX());
         int j = toCellCoordinate(unit.getY());
-        map[i][j] = unit;
+        if (unit instanceof Insertable) {
+            Area area = ((Insertable) unit).getArea();
+            for (Place pl : area.getPlaces()) {
+                int ii = pl.getCell(i, j).getX();
+                int jj = pl.getCell(i, j).getY();
+                map[ii][jj] = unit;
+            }
+        } else {
+            map[i][j] = unit;
+        }
     }
 
     /**
@@ -142,7 +167,8 @@ public class WorldGrid extends Grid {
      * @param cell Cell
      * @return Unit
      */
-    public Unit getUnit(Cell cell) {
+    @Override
+    public Unit getCellValue(Cell cell) {
         int i = cell.getX();
         int j = cell.getY();
         return map[i][j];
@@ -156,7 +182,8 @@ public class WorldGrid extends Grid {
      * @param y double
      * @return Unit
      */
-    public Unit getUnit(double x, double y) {
+    @Override
+    public Unit getCellValue(double x, double y) {
         int i = toCellCoordinate(x);
         int j = toCellCoordinate(y);
         return map[i][j];
@@ -169,7 +196,8 @@ public class WorldGrid extends Grid {
      * @param j int
      * @return Unit
      */
-    public Unit getUnit(int i, int j) {
+    @Override
+    public Unit getCellValue(int i, int j) {
         return map[i][j];
     }
 
@@ -178,6 +206,7 @@ public class WorldGrid extends Grid {
      *
      * @return int
      */
+    @Override
     public int getCellSize() {
         return cellSize;
     }
@@ -187,6 +216,7 @@ public class WorldGrid extends Grid {
      *
      * @param cellSize int
      */
+    @Override
     public void setCellSize(int cellSize) {
         this.cellSize = cellSize;
     }
@@ -232,5 +262,5 @@ public class WorldGrid extends Grid {
         return (!((map[i][j] != null)
                 && (map[i][j].getStatus() == Status.STAND)));
     }
-
+    
 }

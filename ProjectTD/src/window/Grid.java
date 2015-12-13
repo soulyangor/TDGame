@@ -12,7 +12,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -37,7 +36,7 @@ public class Grid {
                 if ((j == 5) || (j == 6) || (j == 4) || (j == 3) || (j == 2) /*|| (j == 0)*/) {
                     grid[i][j] = 10;
                 }
-                if ((i == S)) {
+                if ((i == S) || (i == S + 1)) {
                     grid[i][j] = 0;
                 }
             }

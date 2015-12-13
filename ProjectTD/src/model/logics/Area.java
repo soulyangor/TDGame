@@ -17,4 +17,5 @@ public abstract class Area {
 
     public abstract List<Place> getPlaces();
 
+    public abstract int getSize();
 }

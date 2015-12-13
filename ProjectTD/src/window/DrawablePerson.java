@@ -16,13 +16,16 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import model.logics.Cell;
 import model.components.Status;
+import model.logics.Area;
+import model.logics.areas.Square;
+import model.units.Insertable;
 import model.units.Person;
 
 /**
  *
  * @author Хозяин
  */
-public class DrawablePerson extends Person {
+public class DrawablePerson extends Person implements Insertable {
 
     private final int frames = 8;
     private int currentFrame = 1;
@@ -34,6 +37,7 @@ public class DrawablePerson extends Person {
     public boolean atacking = false;
 
     //временные поля
+    private final Area area = new Square(2);
     public Color color;
     public int d;
 
@@ -82,13 +86,13 @@ public class DrawablePerson extends Person {
         }
         if ((super.getStatus() == Status.STAND)
                 || (super.getStatus() == Status.WAIT)) {
-            g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
+            g2d.drawImage(image, (int) x - 1 * 32 - 8, (int) y - 1 * 32 - 8, (int) x + 3 * 32 - 8, (int) y + 3 * 32 - 8,
                     0, fy * 64, 64, (fy + 1) * 64, null);
         } else {
-            g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
-                    currentFrame * 64, fy * 64, (currentFrame + 1) * 64, (fy + 1) * 64, null);
-            /*g2d.drawImage(image, (int) x - 1*32, (int) y - 2*32, (int) x + 3*32, (int) y + 2*32,
+            /*g2d.drawImage(image, (int) x - 32, (int) y - 32, (int) x + 32, (int) y + 32,
              currentFrame * 64, fy * 64, (currentFrame + 1) * 64, (fy + 1) * 64, null);*/
+            g2d.drawImage(image, (int) x - 1 * 32 - 8, (int) y - 1 * 32 - 8, (int) x + 3 * 32 - 8, (int) y + 3 * 32 - 8,
+                    currentFrame * 64, fy * 64, (currentFrame + 1) * 64, (fy + 1) * 64, null);
         }
         g2d.setColor(color);
         g2d.drawLine((int) x, (int) y,
@@ -131,6 +135,11 @@ public class DrawablePerson extends Person {
             return "Чёрный";
         }
         return "другой цвет";
+    }
+
+    @Override
+    public Area getArea() {
+        return area;
     }
 
 }

@@ -60,29 +60,45 @@ public class DrawPanel extends JComponent implements Runnable {
         p4 = new DrawablePerson(50, 450, "/resources/лыцарь.png");
         GameField.setUnit(p4);
 
-        /*     p1.addTask(new MoveAreaTo(50, 50));
-         p1.addTask(new MoveAreaTo(350, 50));
-         p1.addTask(new MoveAreaTo(350, 350));
-         p1.addTask(new MoveAreaTo(50, 350));*/
-        p1.addTask(new MoveTo(50, 50));
-        p1.addTask(new MoveTo(350, 50));
-        p1.addTask(new MoveTo(350, 350));
-        p1.addTask(new MoveTo(50, 350));
-        p2.addTask(new MoveTo(350, 350));
-        p2.addTask(new MoveTo(350, 50));
-        p2.addTask(new MoveTo(50, 50));
-        p2.addTask(new MoveTo(50, 350));
+        p1.addTask(new MoveAreaTo(50, 50));
+        p1.addTask(new MoveAreaTo(350, 50));
+        p1.addTask(new MoveAreaTo(350, 350));
+        p1.addTask(new MoveAreaTo(50, 350));
 
-        p3.addTask(new MoveTo(50, 50));
-        p3.addTask(new MoveTo(350, 50));
-        p3.addTask(new MoveTo(350, 350));
-        p3.addTask(new MoveTo(50, 350));
+        p2.addTask(new MoveAreaTo(350, 350));
+        p2.addTask(new MoveAreaTo(350, 50));
+        p2.addTask(new MoveAreaTo(50, 50));
+        p2.addTask(new MoveAreaTo(50, 350));
 
-        p4.addTask(new MoveTo(350, 350));
-        p4.addTask(new MoveTo(350, 50));
-        p4.addTask(new MoveTo(50, 50));
-        p4.addTask(new MoveTo(50, 350));
+        p3.addTask(new MoveAreaTo(50, 50));
+        p3.addTask(new MoveAreaTo(350, 50));
+        p3.addTask(new MoveAreaTo(350, 350));
+        p3.addTask(new MoveAreaTo(50, 350));
 
+        p4.addTask(new MoveAreaTo(350, 350));
+        p4.addTask(new MoveAreaTo(350, 50));
+        p4.addTask(new MoveAreaTo(50, 50));
+        p4.addTask(new MoveAreaTo(50, 350));
+
+        /* p1.addTask(new MoveTo(50, 50));
+         p1.addTask(new MoveTo(350, 50));
+         p1.addTask(new MoveTo(350, 350));
+         p1.addTask(new MoveTo(50, 350));
+         
+         p2.addTask(new MoveTo(350, 350));
+         p2.addTask(new MoveTo(350, 50));
+         p2.addTask(new MoveTo(50, 50));
+         p2.addTask(new MoveTo(50, 350));
+
+         p3.addTask(new MoveTo(50, 50));
+         p3.addTask(new MoveTo(350, 50));
+         p3.addTask(new MoveTo(350, 350));
+         p3.addTask(new MoveTo(50, 350));
+
+         p4.addTask(new MoveTo(350, 350));
+         p4.addTask(new MoveTo(350, 50));
+         p4.addTask(new MoveTo(50, 50));
+         p4.addTask(new MoveTo(50, 350));*/
         //Временные операции
         p1.color = Color.BLUE;
         p2.color = Color.RED;
@@ -97,16 +113,16 @@ public class DrawPanel extends JComponent implements Runnable {
                 if (grid.getGrid()[i][j] > 0) {
                     Box b = new Box(GameField.toRealCoordinate(i), GameField.toRealCoordinate(j));
                     GameField.setUnit(b);
-                    WorldGrid.getInstance().setUnit(b);
+                    WorldGrid.getInstance().setCellValue(b);
                     group.add(b);
                 }
             }
         }
 
         group.add(p1);
-         group.add(p2);
-         group.add(p3);
-         group.add(p4);
+        group.add(p2);
+        group.add(p3);
+        group.add(p4);
         new Thread(this).start();
     }
 
