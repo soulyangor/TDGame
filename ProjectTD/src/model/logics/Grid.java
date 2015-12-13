@@ -25,5 +25,6 @@ public abstract class Grid {
     public abstract boolean isWalkable(int i, int j);
 
     public abstract boolean isWalkable(Cell cell);
+    
 
 }

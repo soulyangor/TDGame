@@ -12,7 +12,7 @@ import model.components.Unit;
  *
  * @author Хозяин
  */
-public class Person extends Unit implements Moveable {
+public class Person extends Unit implements Moveable,VisibleArea  {
 
     private double viewDistance;
     private double healPoint;
@@ -61,6 +61,11 @@ public class Person extends Unit implements Moveable {
     @Override
     public double getSpeed() {
         return speed;
+    }
+
+    @Override
+    public Unit getUnit() {
+        return this;
     }
 
 }
